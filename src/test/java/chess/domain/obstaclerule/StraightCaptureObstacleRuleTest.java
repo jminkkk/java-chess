@@ -1,4 +1,4 @@
-package chess.domain.piece.obstaclerule;
+package chess.domain.obstaclerule;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

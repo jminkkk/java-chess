@@ -1,4 +1,4 @@
-package chess.domain.piece.obstaclerule;
+package chess.domain.obstaclerule;
 
 import static chess.domain.pixture.PieceFixture.BLACK_PAWN;
 import static chess.domain.pixture.PieceFixture.WHITE_PAWN;

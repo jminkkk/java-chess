@@ -1,4 +1,4 @@
-package chess.domain.piece.obstaclerule;
+package chess.domain.obstaclerule;
 
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
