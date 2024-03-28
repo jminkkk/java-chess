@@ -399,7 +399,7 @@ class PieceTest {
         @DisplayName("퀸은 도착 위치에 우리편 말이 있는 경우 이동할 수 없다.")
         void canNotMoveWhenTargetIsSameColor(int file, int rank) {
             assertThat(WHITE_QUEEN.getPiece().canMove(Position.of(4, 4), Position.of(file, rank),
-                    Map.of(Position.of(4, 4), piece,
+                    Map.of(Position.of(4, 4), WHITE_QUEEN.getPiece(),
                             Position.of(file, rank), WHITE_QUEEN.getPiece()))).isFalse();
         }
 
