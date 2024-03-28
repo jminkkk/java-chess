@@ -15,16 +15,20 @@ import chess.domain.movement.policy.CombinationPolicy;
 import chess.domain.movement.policy.EnemyExistPolicy;
 import chess.domain.movement.policy.NoRestrictionPolicy;
 import chess.domain.movement.policy.PawnFirstMovePolicy;
-import chess.domain.obstaclerule.DiagonalCaptureObstacleRule;
+import chess.domain.obstaclerule.BishopObstacleRule;
+import chess.domain.obstaclerule.KingObstacleRule;
+import chess.domain.obstaclerule.KnightObstacleRule;
 import chess.domain.obstaclerule.NoObstacleRule;
 import chess.domain.obstaclerule.ObstacleRule;
-import chess.domain.obstaclerule.StraightCaptureObstacleRule;
+import chess.domain.obstaclerule.PawnObstacleRule;
+import chess.domain.obstaclerule.QueenObstacleRule;
+import chess.domain.obstaclerule.RookObstacleRule;
 import chess.domain.position.Position;
 import java.util.List;
 import java.util.Map;
 
 public enum PieceType {
-    KING(new StraightCaptureObstacleRule(),
+    KING(new KingObstacleRule(),
             new Movement(new NoRestrictionPolicy(), new UpDirection(1)),
             new Movement(new NoRestrictionPolicy(), new DownDirection(1)),
             new Movement(new NoRestrictionPolicy(), new LeftDirection(1)),
@@ -35,7 +39,7 @@ public enum PieceType {
             new Movement(new NoRestrictionPolicy(), new DownRightDirection(1))
     ),
 
-    QUEEN(new StraightCaptureObstacleRule(),
+    QUEEN(new QueenObstacleRule(),
             new Movement(new NoRestrictionPolicy(), new UpDirection(8)),
             new Movement(new NoRestrictionPolicy(), new DownDirection(8)),
             new Movement(new NoRestrictionPolicy(), new LeftDirection(8)),
@@ -46,25 +50,25 @@ public enum PieceType {
             new Movement(new NoRestrictionPolicy(), new DownRightDirection(8))
     ),
 
-    BISHOP(new StraightCaptureObstacleRule(),
+    BISHOP(new BishopObstacleRule(),
             new Movement(new NoRestrictionPolicy(), new UpLeftDirection(8)),
             new Movement(new NoRestrictionPolicy(), new UpRightDirection(8)),
             new Movement(new NoRestrictionPolicy(), new DownLeftDirection(8)),
             new Movement(new NoRestrictionPolicy(), new DownRightDirection(8))
     ),
 
-    ROOK(new StraightCaptureObstacleRule(),
+    ROOK(new RookObstacleRule(),
             new Movement(new NoRestrictionPolicy(), new UpDirection(8)),
             new Movement(new NoRestrictionPolicy(), new DownDirection(8)),
             new Movement(new NoRestrictionPolicy(), new LeftDirection(8)),
             new Movement(new NoRestrictionPolicy(), new RightDirection(8))
     ),
 
-    KNIGHT(new StraightCaptureObstacleRule(),
+    KNIGHT(new KnightObstacleRule(),
             new Movement(new NoRestrictionPolicy(), new KnightDirection())
     ),
 
-    PAWN(new DiagonalCaptureObstacleRule(),
+    PAWN(new PawnObstacleRule(),
             new Movement(new CombinationPolicy(new ColorPolicy(Color.WHITE), new PawnFirstMovePolicy()),
                     new UpDirection(2)),
             new Movement(new CombinationPolicy(new ColorPolicy(Color.WHITE), new EnemyExistPolicy()),
