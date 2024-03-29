@@ -1,6 +1,6 @@
 package chess.domain.board;
 
-import static chess.domain.pixture.PieceFixture.WHITE_PAWN;
+import static chess.domain.pixture.PieceFixture.BLACK_PAWN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -17,20 +17,20 @@ class BoardTest {
     @DisplayName("보드에서 체스 말을 이동시킬 수 있다.")
     void movePiece() {
         Board board = new Board(new BoardInitializer());
-        board.tryMove(Position.of(1, 2), Position.of(1, 4));
+        board.tryMove(Position.of(1, 7), Position.of(1, 5));
         Map<Position, Piece> boardPieces = board.getBoard();
         assertAll(
-                () -> assertThat(boardPieces.get(Position.of(1, 2)))
+                () -> assertThat(boardPieces.get(Position.of(1, 7)))
                         .isEqualTo(Piece.getEmptyPiece()),
-                () -> assertThat(boardPieces.get(Position.of(1, 4)))
-                        .isEqualTo(WHITE_PAWN.getPiece()));
+                () -> assertThat(boardPieces.get(Position.of(1, 5)))
+                        .isEqualTo(BLACK_PAWN.getPiece()));
     }
 
     @Test
     @DisplayName("보드에서 체스 말을 이동할 수 없는 경우 예외가 발생한다.")
     void movePieceThrowException() {
         Board board = new Board(new BoardInitializer());
-        assertThatThrownBy(() -> board.tryMove(Position.of(1, 1), Position.of(1, 2)))
+        assertThatThrownBy(() -> board.tryMove(Position.of(1, 7), Position.of(1, 2)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동이 불가능한 위치입니다.");
     }
