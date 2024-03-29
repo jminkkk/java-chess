@@ -21,12 +21,20 @@ public record Piece(PieceType pieceType, Color color) {
     }
 
     private boolean existEnemyAtTarget(final Position target, final Map<Position, Piece> pieces) {
-        return pieces.containsKey(target)
-                && color.isNotSameTeam(pieces.get(target));
+        if (pieces.containsKey(target)) {
+            Piece piece = pieces.get(target);
+            return !color.isSameColor(piece.color);
+        }
+
+        return false;
     }
 
     public boolean isNotSameTeam(final Piece piece) {
-        return color.isNotSameTeam(piece);
+        return !color.isSameColor(piece.color);
+    }
+
+    public boolean isSameTeamColor(final Color color) {
+        return color.isSameColor(this.color);
     }
 
     public boolean isRankMove(final Position source, final Position target) {
