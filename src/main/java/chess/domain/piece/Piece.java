@@ -14,19 +14,10 @@ public record Piece(PieceType pieceType, Color color) {
     public boolean canMove(final Position source, final Position target, final Map<Position, Piece> pieces) {
         return pieceType.getMovements()
                 .stream()
-                .filter(movement -> movement.isSatisfied(color, source, existEnemyAtTarget(target, pieces)))
+                .filter(movement -> movement.isSatisfied(color, source, pieces.get(target)))
                 .map(Movement::getDirection)
                 .anyMatch(direction -> direction.canReach(source, target,
                         pieceType.getObstacle(source, target, pieces)));
-    }
-
-    private boolean existEnemyAtTarget(final Position target, final Map<Position, Piece> pieces) {
-        if (pieces.containsKey(target)) {
-            Piece piece = pieces.get(target);
-            return !color.isSameColor(piece.color);
-        }
-
-        return false;
     }
 
     public boolean isNotSameTeam(final Piece piece) {

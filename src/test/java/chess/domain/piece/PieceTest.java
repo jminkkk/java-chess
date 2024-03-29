@@ -87,10 +87,12 @@ class PieceTest {
             assertAll(
                     () -> assertThat(WHITE_PAWN.getPiece().canMove(source, Position.of(1, 3),
                             Map.of(source, WHITE_PAWN.getPiece(),
-                                    Position.of(1, 2), BLACK_QUEEN.getPiece()))).isFalse(),
+                                    Position.of(1, 2), BLACK_QUEEN.getPiece(),
+                                    Position.of(1, 3), Piece.getEmptyPiece()))).isFalse(),
                     () -> assertThat(WHITE_PAWN.getPiece().canMove(source, Position.of(1, 3),
                             Map.of(source, WHITE_PAWN.getPiece(),
-                                    Position.of(1, 2), WHITE_QUEEN.getPiece()))).isFalse());
+                                    Position.of(1, 2), WHITE_QUEEN.getPiece(),
+                                    Position.of(1, 3), Piece.getEmptyPiece()))).isFalse());
         }
 
         // *p*p <- target
@@ -115,11 +117,13 @@ class PieceTest {
         void canNotMoveDiagonalWhenTargetIsEmpty() {
             assertAll(
                     () -> assertThat(WHITE_PAWN.getPiece().canMove(Position.of(3, 1), Position.of(2, 2),
-                            Map.of(Position.of(3, 1), WHITE_PAWN.getPiece()))).isFalse(),
+                            Map.of(Position.of(3, 1), WHITE_PAWN.getPiece(),
+                                    Position.of(2, 2), Piece.getEmptyPiece()))).isFalse(),
 
                     () -> assertThat(
                             WHITE_PAWN.getPiece().canMove(Position.of(3, 1), Position.of(4, 2),
-                                    Map.of(Position.of(3, 1), WHITE_PAWN.getPiece()))).isFalse());
+                                    Map.of(Position.of(3, 1), WHITE_PAWN.getPiece(),
+                                            Position.of(4, 2), Piece.getEmptyPiece()))).isFalse());
         }
     }
 
