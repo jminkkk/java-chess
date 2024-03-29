@@ -34,4 +34,15 @@ class BoardTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("이동이 불가능한 위치입니다.");
     }
+
+
+    @Test
+    @DisplayName("움직이려는 말의 진영 차례가 아닌 경우 예외가 발생한다.")
+    void isTurnThrowException() {
+        Board board = new Board(new BoardInitializer());
+        assertThatThrownBy(() -> board.tryMove(Position.of(1, 2), Position.of(1, 4)))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("해당 진영의 차례가 아닙니다.");
+
+    }
 }

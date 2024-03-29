@@ -16,13 +16,21 @@ public class Board {
     }
 
     public void tryMove(final Position source, final Position target) {
-        Piece piece = board.get(source);
-        if (piece.canMove(source, target, getBoard())) {
-            move(source, target, piece);
+        Piece sourcePiece = board.get(source);
+        checkTurn(sourcePiece);
+
+        if (sourcePiece.canMove(source, target, getBoard())) {
+            move(source, target, sourcePiece);
             return;
         }
 
         throw new IllegalArgumentException("이동이 불가능한 위치입니다.");
+    }
+
+    private void checkTurn(final Piece piece) {
+        if (!turn.isTurn(piece)) {
+            throw new IllegalArgumentException("해당 진영의 차례가 아닙니다.");
+        }
     }
 
     private void move(final Position source, final Position target, final Piece piece) {
