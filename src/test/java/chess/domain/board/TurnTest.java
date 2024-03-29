@@ -24,4 +24,21 @@ class TurnTest {
                 () -> assertThat(blackTurn.isTurn(Color.WHITE)).isFalse()
         );
     }
+
+    @Test
+    @DisplayName("다음 차례를 반환한다.")
+    void next() {
+        Turn blackTurn = new Turn();
+        assertThat(blackTurn.next()).isEqualTo(new Turn(Color.WHITE));
+    }
+
+    @Test
+    @DisplayName("2팀이 턴을 번갈아가며 수행한다.")
+    void turnTwoTeam() {
+        assertAll(
+                () -> assertThat(new Turn().isTurn(Color.BLACK)).isTrue(),
+                () -> assertThat(new Turn().next().isTurn(Color.WHITE)).isTrue(),
+                () -> assertThat(new Turn().next().next().isTurn(Color.BLACK)).isTrue()
+        );
+    }
 }
