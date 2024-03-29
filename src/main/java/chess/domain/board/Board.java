@@ -7,12 +7,12 @@ import java.util.Map;
 
 public class Board {
 
-    private final BoardInitializer boardInitializer;
     private final Map<Position, Piece> board;
+    private final Turn turn;
 
     public Board(final BoardInitializer boardInitializer) {
-        this.boardInitializer = boardInitializer;
         this.board = boardInitializer.initialize();
+        this.turn = new Turn();
     }
 
     public void tryMove(final Position source, final Position target) {
