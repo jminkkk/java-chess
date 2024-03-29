@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
 import java.util.Objects;
 
 public final class Turn {
@@ -26,8 +27,8 @@ public final class Turn {
         throw new IllegalStateException("게임 순서가 올바르지 못합니다.");
     }
 
-    public boolean isTurn(final Color color) {
-        return turnColor == color;
+    public boolean isTurn(final Piece piece) {
+        return piece.isSameTeamColor(turnColor);
     }
 
     @Override

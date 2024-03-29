@@ -1,5 +1,7 @@
 package chess.domain.board;
 
+import static chess.domain.pixture.PieceFixture.BLACK_PAWN;
+import static chess.domain.pixture.PieceFixture.WHITE_PAWN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
@@ -12,7 +14,7 @@ class TurnTest {
     @Test
     @DisplayName("게임 시작 시 턴은 검정팀부터 시작한다.")
     void createTurn() {
-        assertThat(new Turn().isTurn(Color.BLACK)).isTrue();
+        assertThat(new Turn().isTurn(BLACK_PAWN.getPiece())).isTrue();
     }
 
     @Test
@@ -20,8 +22,8 @@ class TurnTest {
     void isTurn() {
         Turn blackTurn = new Turn();
         assertAll(
-                () -> assertThat(blackTurn.isTurn(Color.BLACK)).isTrue(),
-                () -> assertThat(blackTurn.isTurn(Color.WHITE)).isFalse()
+                () -> assertThat(blackTurn.isTurn(BLACK_PAWN.getPiece())).isTrue(),
+                () -> assertThat(blackTurn.isTurn(WHITE_PAWN.getPiece())).isFalse()
         );
     }
 
@@ -36,9 +38,9 @@ class TurnTest {
     @DisplayName("2팀이 턴을 번갈아가며 수행한다.")
     void turnTwoTeam() {
         assertAll(
-                () -> assertThat(new Turn().isTurn(Color.BLACK)).isTrue(),
-                () -> assertThat(new Turn().next().isTurn(Color.WHITE)).isTrue(),
-                () -> assertThat(new Turn().next().next().isTurn(Color.BLACK)).isTrue()
+                () -> assertThat(new Turn()).isEqualTo(new Turn(Color.BLACK)),
+                () -> assertThat(new Turn().next()).isEqualTo(new Turn(Color.WHITE)),
+                () -> assertThat(new Turn().next().next()).isEqualTo(new Turn(Color.BLACK))
         );
     }
 }
