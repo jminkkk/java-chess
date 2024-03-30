@@ -1,6 +1,7 @@
 package chess.view;
 
 import chess.domain.board.Board;
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import java.util.Arrays;
@@ -14,6 +15,10 @@ public class OutputView {
     private static final int MAXIMUM_FILE_RANGE = 8;
     private static final int MINIMUM_RANK_RANGE = 1;
     private static final int MAXIMUM_RANK_RANGE = 8;
+
+    public void printScore(final double teamScore, final Color color) {
+        System.out.println(color + "팀의 현재 점수는 " + teamScore + "입니다.");
+    }
 
     public void printInitialMessage() {
         System.out.println("> 체스 게임을 시작합니다.");
