@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.obstaclerule.DiagonalAttackPiece;
+import chess.domain.piece.attacker.DiagonalAttackPiece;
 
 public class Pawn extends DiagonalAttackPiece {
 

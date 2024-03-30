@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.obstaclerule.DirectionAttackPiece;
+import chess.domain.piece.attacker.DirectionAttackPiece;
 
 public class Knight extends DirectionAttackPiece {
     public Knight(final Color color) {

@@ -1,4 +1,4 @@
-package chess.domain.obstaclerule;
+package chess.domain.piece.attacker;
 
 import chess.domain.movement.Movement;
 import chess.domain.piece.Color;
