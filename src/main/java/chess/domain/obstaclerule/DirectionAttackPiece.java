@@ -26,12 +26,11 @@ public class DirectionAttackPiece extends Piece implements Attacker {
     @Override
     public List<Position> findObstacle(final Position source, final Position target,
                                        final Map<Position, Piece> pieces) {
-        final Piece sourcePiece = pieces.getOrDefault(source, Empty.getInstance());
-        final Piece targetPiece = pieces.getOrDefault(target, Empty.getInstance());
         List<Position> obstacles = getNotEmptyPiecePositions(pieces);
+        obstacles.remove(source);
 
-        removeSourcePosition(source, obstacles);
-        removeCapturableTargetFromObstacle(target, sourcePiece, targetPiece, obstacles);
+        removeCapturableTargetFromObstacle(target, pieces.getOrDefault(source, Empty.getInstance()),
+                pieces.getOrDefault(target, Empty.getInstance()), obstacles);
         return obstacles;
     }
 }

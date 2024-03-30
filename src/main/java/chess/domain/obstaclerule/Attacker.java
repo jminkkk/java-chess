@@ -22,10 +22,6 @@ public interface Attacker {
         }
     }
 
-    default void removeSourcePosition(final Position source, final List<Position> positions) {
-        positions.remove(source);
-    }
-
     default List<Position> getNotEmptyPiecePositions(final Map<Position, Piece> pieces) {
         return pieces.entrySet().stream()
                 .filter(entry -> !entry.getValue().isEmpty())
