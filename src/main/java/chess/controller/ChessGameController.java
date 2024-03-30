@@ -2,7 +2,9 @@ package chess.controller;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
+import chess.domain.piece.Color;
 import chess.domain.position.Position;
+import chess.domain.scorerule.Referee;
 import chess.view.GameCommand;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -35,8 +37,14 @@ public class ChessGameController {
         Board board = initializeBoard();
         GameCommand gameCommand = inputView.getGameCommand();
 
-        while (gameCommand == GameCommand.MOVE) {
-            playTurn(board);
+        while (gameCommand == GameCommand.MOVE ||
+                gameCommand == GameCommand.STATUS) {
+
+            if (gameCommand == GameCommand.STATUS) {
+                viewScore(board);
+            } else {
+                playTurn(board);
+            }
             gameCommand = inputView.getGameCommand();
         }
 
@@ -57,5 +65,14 @@ public class ChessGameController {
 
         board.tryMove(source, target);
         outputView.printBoard(board);
+    }
+
+    private void viewScore(final Board board) {
+        Referee referee = new Referee(board.getBoard());
+
+        double blackTeamScore = referee.calculateScore(Color.BLACK);
+        outputView.printScore(blackTeamScore, Color.BLACK);
+        double whiteTeamScore = referee.calculateScore(Color.WHITE);
+        outputView.printScore(whiteTeamScore, Color.WHITE);
     }
 }
