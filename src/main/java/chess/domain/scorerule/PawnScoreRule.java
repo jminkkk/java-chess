@@ -27,7 +27,7 @@ public class PawnScoreRule extends ScoreRule {
         int count = 0;
         Map<File, List<Position>> sameFilePositions = getSameFilePositions(positionPerPieces);
         for (Entry<File, List<Position>> entry : sameFilePositions.entrySet()) {
-            count += getCount(count, entry);
+            count += getSameFileCount(entry);
         }
 
         return count;
@@ -38,11 +38,11 @@ public class PawnScoreRule extends ScoreRule {
                 .collect(groupingBy(Position::file, toList()));
     }
 
-    private int getCount(int sameFilePositionCount, final Entry<File, List<Position>> entry) {
+    private int getSameFileCount(final Entry<File, List<Position>> entry) {
         int size = entry.getValue().size();
         if (size > 1) {
-            sameFilePositionCount += size;
+            return size;
         }
-        return sameFilePositionCount;
+        return 0;
     }
 }
