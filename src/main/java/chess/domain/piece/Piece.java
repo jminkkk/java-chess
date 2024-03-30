@@ -28,10 +28,6 @@ public record Piece(PieceType pieceType, Color color) {
         return color.isSameColor(this.color);
     }
 
-    public boolean isRankMove(final Position source, final Position target) {
-        return source.file() == target.file();
-    }
-
     public boolean isEmpty() {
         return this == EMPTY_PIECE;
     }
