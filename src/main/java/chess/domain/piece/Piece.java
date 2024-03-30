@@ -2,10 +2,19 @@ package chess.domain.piece;
 
 import chess.domain.movement.Movement;
 import chess.domain.position.Position;
+import java.util.List;
 import java.util.Map;
 
-public record Piece(PieceType pieceType, Color color) {
+public abstract class Piece {
     private static final Piece EMPTY_PIECE = new Piece(PieceType.EMPTY, Color.NONE);
+
+    private final PieceType pieceType;
+    private final Color color;
+
+    protected Piece(final PieceType pieceType, final Color color) {
+        this.pieceType = pieceType;
+        this.color = color;
+    }
 
     public static Piece getEmptyPiece() {
         return EMPTY_PIECE;
@@ -16,9 +25,11 @@ public record Piece(PieceType pieceType, Color color) {
                 .stream()
                 .filter(movement -> movement.isSatisfied(color, source, pieces.get(target)))
                 .map(Movement::getDirection)
-                .anyMatch(direction -> direction.canReach(source, target,
-                        pieceType.getObstacle(source, target, pieces)));
+                .anyMatch(direction -> direction.canReach(source, target, findObstacle(source, target, pieces)));
     }
+
+    public abstract List<Position> findObstacle(final Position source, final Position target,
+                                                final Map<Position, Piece> pieces);
 
     public boolean isNotSameTeam(final Piece piece) {
         return !color.isSameColor(piece.color);
@@ -30,5 +41,13 @@ public record Piece(PieceType pieceType, Color color) {
 
     public boolean isEmpty() {
         return this == EMPTY_PIECE;
+    }
+
+    public PieceType getPieceType() {
+        return pieceType;
+    }
+
+    public Color getColor() {
+        return color;
     }
 }
