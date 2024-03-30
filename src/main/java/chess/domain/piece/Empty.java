@@ -1,10 +1,10 @@
 package chess.domain.piece;
 
-import chess.domain.obstaclerule.NonAttacker;
+import chess.domain.obstaclerule.NotAttackPiece;
 import chess.domain.position.Position;
 import java.util.Map;
 
-public class Empty extends NonAttacker {
+public class Empty extends NotAttackPiece {
     private static final Empty EMPTY = new Empty();
 
     private Empty() {

@@ -1,5 +1,6 @@
 package chess.domain.obstaclerule;
 
+import chess.domain.movement.Movement;
 import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
@@ -8,22 +9,29 @@ import chess.domain.position.Position;
 import java.util.List;
 import java.util.Map;
 
-// 대각선 방향으로 공격을 하는 경우
-public class DiagonalAttacker extends Piece {
-
-    protected DiagonalAttacker(final PieceType pieceType, final Color color) {
+public class DiagonalAttackPiece extends Piece implements Attacker {
+    protected DiagonalAttackPiece(final PieceType pieceType, final Color color) {
         super(pieceType, color);
+    }
+
+    @Override
+    public boolean canMove(final Position source, final Position target, final Map<Position, Piece> pieces) {
+        return pieceType.getMovements()
+                .stream()
+                .filter(movement -> movement.isSatisfied(color, source, pieces.get(target)))
+                .map(Movement::getDirection)
+                .anyMatch(direction -> direction.canReach(source, target, findObstacle(source, target, pieces)));
     }
 
     @Override
     public List<Position> findObstacle(final Position source, final Position target,
                                        final Map<Position, Piece> pieces) {
-        final Piece sourcePiece = pieces.get(source);
-        final Piece targetPiece = pieces.getOrDefault(target, new Empty());
+        final Piece sourcePiece = pieces.getOrDefault(source, Empty.getInstance());
+        final Piece targetPiece = pieces.getOrDefault(target, Empty.getInstance());
         List<Position> obstacles = getNotEmptyPiecePositions(pieces);
 
-        removeCapturableTargetFromObstacle(target, sourcePiece, targetPiece, obstacles);
         removeSourcePosition(source, obstacles);
+        removeCapturableTargetFromObstacle(target, sourcePiece, targetPiece, obstacles);
         addTargetToObstacle(source, target, sourcePiece, targetPiece, obstacles);
         return obstacles;
     }
