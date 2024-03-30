@@ -5,8 +5,14 @@ import chess.domain.position.Position;
 import java.util.Map;
 
 public class Empty extends NonAttacker {
-    public Empty() {
+    private static final Empty EMPTY = new Empty();
+
+    private Empty() {
         super(PieceType.EMPTY, Color.NONE);
+    }
+
+    public static Empty getInstance() {
+        return EMPTY;
     }
 
     @Override

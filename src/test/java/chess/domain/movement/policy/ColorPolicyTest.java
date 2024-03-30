@@ -21,9 +21,9 @@ class ColorPolicyTest {
 
         assertAll(
                 () -> assertThat(policy.isSatisfied(Color.WHITE, PAWN_NOT_FIRST_MOVE_POSITION.getPosition(),
-                        new Empty())).isTrue(),
+                        Empty.getInstance())).isTrue(),
                 () -> assertThat(policy.isSatisfied(Color.WHITE, WHITE_PAWN_FIRST_MOVE_POSITION.getPosition(),
-                        new Empty())).isTrue());
+                        Empty.getInstance())).isTrue());
     }
 
     @ParameterizedTest
@@ -33,6 +33,6 @@ class ColorPolicyTest {
         ColorPolicy policy = new ColorPolicy(Color.WHITE);
 
         assertThat(policy.isSatisfied(Color.BLACK, WHITE_PAWN_FIRST_MOVE_POSITION.getPosition(),
-                new Empty())).isFalse();
+                Empty.getInstance())).isFalse();
     }
 }

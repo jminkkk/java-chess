@@ -17,8 +17,8 @@ class CombinationPolicyTest {
         CombinationPolicy policy = new CombinationPolicy(new ColorPolicy(Color.WHITE), new PawnFirstMovePolicy());
 
         assertAll(
-                () -> assertThat(policy.isSatisfied(Color.WHITE, Position.of(1, 2), new Empty())),
-                () -> assertThat(policy.isSatisfied(Color.WHITE, Position.of(1, 2), new Empty()))
+                () -> assertThat(policy.isSatisfied(Color.WHITE, Position.of(1, 2), Empty.getInstance())),
+                () -> assertThat(policy.isSatisfied(Color.WHITE, Position.of(1, 2), Empty.getInstance()))
         );
     }
 
@@ -28,8 +28,8 @@ class CombinationPolicyTest {
         CombinationPolicy policy = new CombinationPolicy(new ColorPolicy(Color.WHITE), new PawnFirstMovePolicy());
 
         assertAll(
-                () -> assertThat(policy.isSatisfied(Color.BLACK, Position.of(1, 2), new Empty())),
-                () -> assertThat(policy.isSatisfied(Color.WHITE, Position.of(1, 7), new Empty()))
+                () -> assertThat(policy.isSatisfied(Color.BLACK, Position.of(1, 2), Empty.getInstance())),
+                () -> assertThat(policy.isSatisfied(Color.WHITE, Position.of(1, 7), Empty.getInstance()))
         );
     }
 

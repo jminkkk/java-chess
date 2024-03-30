@@ -20,16 +20,16 @@ class PawnFirstMovePolicyTest {
         assertAll(
                 () -> assertThat(
                         policy.isSatisfied(Color.BLACK, BLACK_PAWN_FIRST_MOVE_POSITION.getPosition(),
-                                new Empty())).isTrue(),
+                                Empty.getInstance())).isTrue(),
                 () -> assertThat(
                         policy.isSatisfied(Color.BLACK, BLACK_PAWN_FIRST_MOVE_POSITION.getPosition(),
-                                new Empty())).isTrue(),
+                                Empty.getInstance())).isTrue(),
                 () -> assertThat(
                         policy.isSatisfied(Color.WHITE, WHITE_PAWN_FIRST_MOVE_POSITION.getPosition(),
-                                new Empty())).isTrue(),
+                                Empty.getInstance())).isTrue(),
                 () -> assertThat(
                         policy.isSatisfied(Color.WHITE, WHITE_PAWN_FIRST_MOVE_POSITION.getPosition(),
-                                new Empty())).isTrue()
+                                Empty.getInstance())).isTrue()
         );
     }
 
@@ -41,16 +41,16 @@ class PawnFirstMovePolicyTest {
         assertAll(
                 () -> assertThat(
                         policy.isSatisfied(Color.BLACK, WHITE_PAWN_FIRST_MOVE_POSITION.getPosition(),
-                                new Empty())).isFalse(),
+                                Empty.getInstance())).isFalse(),
                 () -> assertThat(
                         policy.isSatisfied(Color.BLACK, WHITE_PAWN_FIRST_MOVE_POSITION.getPosition(),
-                                new Empty())).isFalse(),
+                                Empty.getInstance())).isFalse(),
                 () -> assertThat(
                         policy.isSatisfied(Color.WHITE, BLACK_PAWN_FIRST_MOVE_POSITION.getPosition(),
-                                new Empty())).isFalse(),
+                                Empty.getInstance())).isFalse(),
                 () -> assertThat(
                         policy.isSatisfied(Color.WHITE, BLACK_PAWN_FIRST_MOVE_POSITION.getPosition(),
-                                new Empty())).isFalse()
+                                Empty.getInstance())).isFalse()
         );
     }
 }

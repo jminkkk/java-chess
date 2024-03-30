@@ -22,7 +22,7 @@ class BoardTest {
         Map<Position, Piece> boardPieces = board.getBoard();
         assertAll(
                 () -> assertThat(boardPieces.get(Position.of(1, 7)))
-                        .isEqualTo(new Empty()),
+                        .isEqualTo(Empty.getInstance()),
                 () -> assertThat(boardPieces.get(Position.of(1, 5)))
                         .isEqualTo(BLACK_PAWN.getPiece()));
     }

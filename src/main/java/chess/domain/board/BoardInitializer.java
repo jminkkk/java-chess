@@ -37,7 +37,7 @@ public class BoardInitializer {
         return IntStream.rangeClosed(MINIMUM_BOARD_POSITION, MAXIMUM_BOARD_POSITION)
                 .boxed()
                 .flatMap(this::generateHorizontalLine)
-                .collect(generateEntry(new Empty()));
+                .collect(generateEntry(Empty.getInstance()));
     }
 
     private Stream<Position> generateHorizontalLine(final int rank) {

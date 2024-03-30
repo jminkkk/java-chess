@@ -36,7 +36,7 @@ public class Board {
 
     private void move(final Position source, final Position target, final Piece piece) {
         board.put(target, piece);
-        board.put(source, new Empty());
+        board.put(source, Empty.getInstance());
     }
 
     public Map<Position, Piece> getBoard() {

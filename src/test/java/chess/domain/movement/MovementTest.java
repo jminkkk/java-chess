@@ -26,8 +26,8 @@ class MovementTest {
     void isSatisfied() {
         Movement movement = new Movement(new ColorPolicy(Color.WHITE), new UpRightDirection(2));
         assertAll(
-                () -> assertThat(movement.isSatisfied(Color.WHITE, Position.of(1, 1), new Empty())).isTrue(),
-                () -> assertThat(movement.isSatisfied(Color.BLACK, Position.of(1, 1), new Empty())).isFalse()
+                () -> assertThat(movement.isSatisfied(Color.WHITE, Position.of(1, 1), Empty.getInstance())).isTrue(),
+                () -> assertThat(movement.isSatisfied(Color.BLACK, Position.of(1, 1), Empty.getInstance())).isFalse()
         );
     }
 

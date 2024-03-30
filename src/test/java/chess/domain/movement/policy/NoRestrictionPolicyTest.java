@@ -18,10 +18,10 @@ class NoRestrictionPolicyTest {
         NoRestrictionPolicy policy = new NoRestrictionPolicy();
 
         assertAll(
-                () -> assertThat(policy.isSatisfied(color, Position.of(1, 1), new Empty())).isTrue(),
-                () -> assertThat(policy.isSatisfied(color, Position.of(1, 8), new Empty())).isTrue(),
-                () -> assertThat(policy.isSatisfied(color, Position.of(8, 1), new Empty())).isTrue(),
-                () -> assertThat(policy.isSatisfied(color, Position.of(8, 8), new Empty())).isTrue()
+                () -> assertThat(policy.isSatisfied(color, Position.of(1, 1), Empty.getInstance())).isTrue(),
+                () -> assertThat(policy.isSatisfied(color, Position.of(1, 8), Empty.getInstance())).isTrue(),
+                () -> assertThat(policy.isSatisfied(color, Position.of(8, 1), Empty.getInstance())).isTrue(),
+                () -> assertThat(policy.isSatisfied(color, Position.of(8, 8), Empty.getInstance())).isTrue()
         );
     }
 }

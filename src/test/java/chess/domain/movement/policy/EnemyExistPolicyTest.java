@@ -18,7 +18,7 @@ class EnemyExistPolicyTest {
         EnemyExistPolicy policy = new EnemyExistPolicy();
 
         assertThat(policy.isSatisfied(Color.BLACK, Position.of(1, 1), BLACK_BISHOP.getPiece())).isFalse();
-        assertThat(policy.isSatisfied(Color.BLACK, Position.of(1, 1), new Empty())).isFalse();
+        assertThat(policy.isSatisfied(Color.BLACK, Position.of(1, 1), Empty.getInstance())).isFalse();
     }
 
     @Test
