@@ -9,7 +9,7 @@ import java.util.Map;
 public class Board {
 
     private final Map<Position, Piece> board;
-    private final Turn turn;
+    private Turn turn;
 
     public Board(final BoardInitializer boardInitializer) {
         this.board = boardInitializer.initialize();
@@ -22,6 +22,7 @@ public class Board {
 
         if (sourcePiece.canMove(source, target, getBoard())) {
             move(source, target, sourcePiece);
+            this.turn = turn.next();
             return;
         }
 
