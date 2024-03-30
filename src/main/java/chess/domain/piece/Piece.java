@@ -1,35 +1,19 @@
 package chess.domain.piece;
 
-import chess.domain.movement.Movement;
 import chess.domain.position.Position;
-import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public abstract class Piece {
-    private static final Piece EMPTY_PIECE = new Piece(PieceType.EMPTY, Color.NONE);
-
-    private final PieceType pieceType;
-    private final Color color;
+    protected final PieceType pieceType;
+    protected final Color color;
 
     protected Piece(final PieceType pieceType, final Color color) {
         this.pieceType = pieceType;
         this.color = color;
     }
 
-    public static Piece getEmptyPiece() {
-        return EMPTY_PIECE;
-    }
-
-    public boolean canMove(final Position source, final Position target, final Map<Position, Piece> pieces) {
-        return pieceType.getMovements()
-                .stream()
-                .filter(movement -> movement.isSatisfied(color, source, pieces.get(target)))
-                .map(Movement::getDirection)
-                .anyMatch(direction -> direction.canReach(source, target, findObstacle(source, target, pieces)));
-    }
-
-    public abstract List<Position> findObstacle(final Position source, final Position target,
-                                                final Map<Position, Piece> pieces);
+    public abstract boolean canMove(final Position source, final Position target, final Map<Position, Piece> pieces);
 
     public boolean isNotSameTeam(final Piece piece) {
         return !color.isSameColor(piece.color);
@@ -40,7 +24,7 @@ public abstract class Piece {
     }
 
     public boolean isEmpty() {
-        return this == EMPTY_PIECE;
+        return this == Empty.getInstance();
     }
 
     public PieceType getPieceType() {
@@ -49,5 +33,22 @@ public abstract class Piece {
 
     public Color getColor() {
         return color;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Piece piece = (Piece) o;
+        return pieceType == piece.pieceType && color == piece.color;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pieceType, color);
     }
 }
