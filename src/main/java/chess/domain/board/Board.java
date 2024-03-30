@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import java.util.Collections;
@@ -35,7 +36,7 @@ public class Board {
 
     private void move(final Position source, final Position target, final Piece piece) {
         board.put(target, piece);
-        board.put(source, Piece.getEmptyPiece());
+        board.put(source, new Empty());
     }
 
     public Map<Position, Piece> getBoard() {

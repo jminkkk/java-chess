@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
+import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import java.util.Map;
@@ -21,7 +22,7 @@ class BoardTest {
         Map<Position, Piece> boardPieces = board.getBoard();
         assertAll(
                 () -> assertThat(boardPieces.get(Position.of(1, 7)))
-                        .isEqualTo(Piece.getEmptyPiece()),
+                        .isEqualTo(new Empty()),
                 () -> assertThat(boardPieces.get(Position.of(1, 5)))
                         .isEqualTo(BLACK_PAWN.getPiece()));
     }

@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
+import chess.domain.piece.Empty;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,10 +18,10 @@ class NoRestrictionPolicyTest {
         NoRestrictionPolicy policy = new NoRestrictionPolicy();
 
         assertAll(
-                () -> assertThat(policy.isSatisfied(color, Position.of(1, 1), Piece.getEmptyPiece())).isTrue(),
-                () -> assertThat(policy.isSatisfied(color, Position.of(1, 8), Piece.getEmptyPiece())).isTrue(),
-                () -> assertThat(policy.isSatisfied(color, Position.of(8, 1), Piece.getEmptyPiece())).isTrue(),
-                () -> assertThat(policy.isSatisfied(color, Position.of(8, 8), Piece.getEmptyPiece())).isTrue()
+                () -> assertThat(policy.isSatisfied(color, Position.of(1, 1), new Empty())).isTrue(),
+                () -> assertThat(policy.isSatisfied(color, Position.of(1, 8), new Empty())).isTrue(),
+                () -> assertThat(policy.isSatisfied(color, Position.of(8, 1), new Empty())).isTrue(),
+                () -> assertThat(policy.isSatisfied(color, Position.of(8, 8), new Empty())).isTrue()
         );
     }
 }

@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
+import chess.domain.piece.Empty;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -20,16 +20,16 @@ class PawnFirstMovePolicyTest {
         assertAll(
                 () -> assertThat(
                         policy.isSatisfied(Color.BLACK, BLACK_PAWN_FIRST_MOVE_POSITION.getPosition(),
-                                Piece.getEmptyPiece())).isTrue(),
+                                new Empty())).isTrue(),
                 () -> assertThat(
                         policy.isSatisfied(Color.BLACK, BLACK_PAWN_FIRST_MOVE_POSITION.getPosition(),
-                                Piece.getEmptyPiece())).isTrue(),
+                                new Empty())).isTrue(),
                 () -> assertThat(
                         policy.isSatisfied(Color.WHITE, WHITE_PAWN_FIRST_MOVE_POSITION.getPosition(),
-                                Piece.getEmptyPiece())).isTrue(),
+                                new Empty())).isTrue(),
                 () -> assertThat(
                         policy.isSatisfied(Color.WHITE, WHITE_PAWN_FIRST_MOVE_POSITION.getPosition(),
-                                Piece.getEmptyPiece())).isTrue()
+                                new Empty())).isTrue()
         );
     }
 
@@ -41,16 +41,16 @@ class PawnFirstMovePolicyTest {
         assertAll(
                 () -> assertThat(
                         policy.isSatisfied(Color.BLACK, WHITE_PAWN_FIRST_MOVE_POSITION.getPosition(),
-                                Piece.getEmptyPiece())).isFalse(),
+                                new Empty())).isFalse(),
                 () -> assertThat(
                         policy.isSatisfied(Color.BLACK, WHITE_PAWN_FIRST_MOVE_POSITION.getPosition(),
-                                Piece.getEmptyPiece())).isFalse(),
+                                new Empty())).isFalse(),
                 () -> assertThat(
                         policy.isSatisfied(Color.WHITE, BLACK_PAWN_FIRST_MOVE_POSITION.getPosition(),
-                                Piece.getEmptyPiece())).isFalse(),
+                                new Empty())).isFalse(),
                 () -> assertThat(
                         policy.isSatisfied(Color.WHITE, BLACK_PAWN_FIRST_MOVE_POSITION.getPosition(),
-                                Piece.getEmptyPiece())).isFalse()
+                                new Empty())).isFalse()
         );
     }
 }

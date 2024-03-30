@@ -4,6 +4,7 @@ import static chess.domain.piece.Color.BLACK;
 import static chess.domain.piece.Color.WHITE;
 
 import chess.domain.piece.Color;
+import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import java.util.HashMap;
@@ -36,7 +37,7 @@ public class BoardInitializer {
         return IntStream.rangeClosed(MINIMUM_BOARD_POSITION, MAXIMUM_BOARD_POSITION)
                 .boxed()
                 .flatMap(this::generateHorizontalLine)
-                .collect(generateEntry(Piece.getEmptyPiece()));
+                .collect(generateEntry(new Empty()));
     }
 
     private Stream<Position> generateHorizontalLine(final int rank) {

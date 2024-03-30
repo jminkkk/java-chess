@@ -5,7 +5,7 @@ import static chess.domain.pixture.PieceFixture.WHITE_PAWN;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
+import chess.domain.piece.Empty;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,7 +18,7 @@ class EnemyExistPolicyTest {
         EnemyExistPolicy policy = new EnemyExistPolicy();
 
         assertThat(policy.isSatisfied(Color.BLACK, Position.of(1, 1), BLACK_BISHOP.getPiece())).isFalse();
-        assertThat(policy.isSatisfied(Color.BLACK, Position.of(1, 1), Piece.getEmptyPiece())).isFalse();
+        assertThat(policy.isSatisfied(Color.BLACK, Position.of(1, 1), new Empty())).isFalse();
     }
 
     @Test
