@@ -35,19 +35,38 @@ public class ChessGameController {
 
     private void play() {
         Board board = initializeBoard();
+        processGame(board);
+    }
+
+    private void processGame(Board board) {
         GameCommand gameCommand = inputView.getGameCommand();
 
-        while (gameCommand == GameCommand.MOVE ||
-                gameCommand == GameCommand.STATUS) {
-
-            if (gameCommand == GameCommand.STATUS) {
-                viewScore(board);
-            } else {
-                playTurn(board);
+        while (isGameContinuing(gameCommand)) {
+            processCommand(gameCommand, board);
+            if (board.isFinish()) {
+                outputView.printFinish();
+                return;
             }
             gameCommand = inputView.getGameCommand();
         }
 
+        restartGameIfRequested(gameCommand);
+    }
+
+    private boolean isGameContinuing(GameCommand gameCommand) {
+        return gameCommand == GameCommand.MOVE || gameCommand == GameCommand.STATUS;
+    }
+
+    private void processCommand(GameCommand gameCommand, Board board) {
+        if (gameCommand == GameCommand.MOVE) {
+            playTurn(board);
+        }
+        if (gameCommand == GameCommand.STATUS) {
+            viewScore(board);
+        }
+    }
+
+    private void restartGameIfRequested(GameCommand gameCommand) {
         if (gameCommand == GameCommand.START) {
             play();
         }
