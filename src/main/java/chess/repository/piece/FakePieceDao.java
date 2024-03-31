@@ -1,10 +1,11 @@
 package chess.repository.piece;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class FakePieceDao implements PieceDao {
-    private List<PieceDto> pieces = new ArrayList<>();
+    private List<PieceDto> pieces = new LinkedList<>();
 
     @Override
     public void save(final PieceDto pieceDto) {
