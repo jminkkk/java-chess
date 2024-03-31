@@ -57,7 +57,7 @@ public class ChessGameController {
         }
 
         if (Objects.equals(saveGameStart, "n")) {
-            gameService.deleteAll();
+            gameService.delete();
             play();
         }
     }
@@ -74,7 +74,7 @@ public class ChessGameController {
             processCommand(gameCommand, board);
             if (board.isFinish()) {
                 outputView.printFinish();
-                gameService.deleteAll();
+                gameService.delete();
                 return;
             }
 
@@ -106,7 +106,7 @@ public class ChessGameController {
 
     private void saveGameIfEnd(GameCommand gameCommand, final Board board) {
         if (gameCommand == GameCommand.END) {
-            gameService.deleteAll();
+            gameService.delete();
             gameService.save(board);
         }
     }

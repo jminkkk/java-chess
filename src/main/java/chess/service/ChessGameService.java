@@ -4,7 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.board.Turn;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
-import chess.repository.piece.PieceDaoImpl;
+import chess.repository.piece.PieceDao;
 import chess.repository.piece.PieceDto;
 import chess.repository.turn.TurnDao;
 import chess.repository.turn.TurnDto;
@@ -14,11 +14,11 @@ import java.util.stream.Collectors;
 
 public class ChessGameService {
 
-    private final PieceDaoImpl pieceDaoImpl;
+    private final PieceDao pieceDao;
     private final TurnDao turnDao;
 
-    public ChessGameService(final PieceDaoImpl pieceDaoImpl, final TurnDao turnDao) {
-        this.pieceDaoImpl = pieceDaoImpl;
+    public ChessGameService(final PieceDao pieceDao, final TurnDao turnDao) {
+        this.pieceDao = pieceDao;
         this.turnDao = turnDao;
     }
 
@@ -30,7 +30,7 @@ public class ChessGameService {
     private void saveAllPiece(final Map<Position, Piece> pieces) {
         pieces.entrySet().stream()
                 .map(entry -> PieceDto.of(entry.getValue(), entry.getKey()))
-                .forEach(pieceDaoImpl::save);
+                .forEach(pieceDao::save);
     }
 
     private void saveTurn(final Turn turn) {
@@ -38,7 +38,7 @@ public class ChessGameService {
     }
 
     public Map<Position, Piece> findAllPiece() {
-        List<PieceDto> piecesWithPosition = pieceDaoImpl.findAll();
+        List<PieceDto> piecesWithPosition = pieceDao.findAll();
         return piecesWithPosition.stream()
                 .collect(Collectors.toMap(PieceDto::getPositionFrom, PieceDto::getPieceFrom));
     }
@@ -48,8 +48,8 @@ public class ChessGameService {
         return turnDto.from();
     }
 
-    public void deleteAll() {
-        pieceDaoImpl.deleteAll();
+    public void delete() {
+        pieceDao.deleteAll();
         turnDao.deleteAll();
     }
 
