@@ -16,10 +16,6 @@ public class OutputView {
     private static final int MINIMUM_RANK_RANGE = 1;
     private static final int MAXIMUM_RANK_RANGE = 8;
 
-    public void printScore(final double teamScore, final Color color) {
-        System.out.println(color + "팀의 현재 점수는 " + teamScore + "입니다.");
-    }
-
     public void printInitialMessage() {
         System.out.println("> 체스 게임을 시작합니다.");
         String commandMessage = Arrays.stream(GameCommand.values())
@@ -44,5 +40,13 @@ public class OutputView {
                 .map(PieceSymbol::getDisplay)
                 .collect(Collectors.joining(""));
         System.out.println(rankLine);
+    }
+
+    public void printScore(final double teamScore, final Color color) {
+        System.out.println(color + "팀의 현재 점수는 " + teamScore + "입니다.");
+    }
+
+    public void printFinish() {
+        System.out.println("King이 잡혔습니다. 게임을 종료합니다.");
     }
 }
