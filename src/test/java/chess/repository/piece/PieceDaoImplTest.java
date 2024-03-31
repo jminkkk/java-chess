@@ -8,28 +8,30 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class PieceDaoImplTest {
-    private PieceDaoImpl pieceDaoImpl;
+    private PieceDao pieceDao;
 
     @BeforeEach
     void init() {
-        pieceDaoImpl = new PieceDaoImpl();
+        pieceDao = new FakePieceDao();
     }
 
     @Test
     void addPiece() {
         PieceDto pieceDto = new PieceDto("BLACK", "PAWN", 1, 2);
-        assertThatCode(() -> pieceDaoImpl.save(pieceDto));
+        assertThatCode(() -> pieceDao.save(pieceDto));
     }
 
     @Test
     void findAll() {
-        assertThat(pieceDaoImpl.findAll())
-                .isEqualTo(List.of(new PieceDto("BLACK", "PAWN", 1, 2)));
+        PieceDto pieceDto = new PieceDto("BLACK", "PAWN", 1, 2);
+        pieceDao.save(pieceDto);
+        
+        assertThat(pieceDao.findAll()).isEqualTo(List.of(pieceDto));
     }
 
     @Test
     void deleteAll() {
-        pieceDaoImpl.deleteAll();
-        assertThat(pieceDaoImpl.findAll()).isEqualTo(List.of());
+        pieceDao.deleteAll();
+        assertThat(pieceDao.findAll()).isEqualTo(List.of());
     }
 }
