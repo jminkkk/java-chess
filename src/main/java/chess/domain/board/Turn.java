@@ -47,4 +47,8 @@ public final class Turn {
     public int hashCode() {
         return Objects.hash(turnColor);
     }
+
+    public Color getColor() {
+        return turnColor;
+    }
 }
