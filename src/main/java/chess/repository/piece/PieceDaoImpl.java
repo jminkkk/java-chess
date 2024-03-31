@@ -47,7 +47,7 @@ public class PieceDaoImpl implements PieceDao {
         var pieceType = resultSet.getString("pieceType");
         var rank = resultSet.getInt("rank");
         var file = resultSet.getInt("file");
-        pieceDtos.add(new PieceDto(color, pieceType, rank, file));
+        pieceDtos.add(new PieceDto(color, pieceType, file, rank));
     }
 
     @Override

@@ -17,6 +17,11 @@ public class Board {
         this.turn = new Turn();
     }
 
+    public Board(final BoardInitializer boardInitializer, final Turn turn) {
+        this.board = boardInitializer.initialize();
+        this.turn = turn;
+    }
+
     public void tryMove(final Position source, final Position target) {
         Piece sourcePiece = board.get(source);
         checkTurn(sourcePiece);
@@ -41,14 +46,18 @@ public class Board {
         board.put(source, Empty.getInstance());
     }
 
-    public Map<Position, Piece> getBoard() {
-        return Collections.unmodifiableMap(board);
-    }
-
     public boolean isFinish() {
         int kingCount = (int) board.entrySet().stream()
                 .filter(entry -> entry.getValue().getPieceType() == PieceType.KING)
                 .count();
         return kingCount < 2;
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return Collections.unmodifiableMap(board);
+    }
+
+    public Turn getTurn() {
+        return turn;
     }
 }
