@@ -27,6 +27,10 @@ public abstract class Piece {
         return this == Empty.getInstance();
     }
 
+    public boolean isSameType(final PieceType pieceType) {
+        return this.pieceType == pieceType;
+    }
+
     public PieceType getPieceType() {
         return pieceType;
     }

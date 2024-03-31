@@ -12,7 +12,6 @@ public interface Attacker {
     List<Position> findObstacle(final Position source, final Position target,
                                 final Map<Position, Piece> pieces);
 
-    // TODO: 제거
     default void removeCapturableTargetFromObstacle(final Position target, final Piece sourcePiece,
                                                     final Piece targetPiece,
                                                     final List<Position> obstacles) {

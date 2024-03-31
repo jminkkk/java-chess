@@ -75,9 +75,8 @@ public enum InitialPiecePosition {
                 .toList();
     }
 
-    // TODO: getter말고 물어보기
     public boolean isSameColor(final Color color) {
-        return piece.getColor() == color;
+        return color.isSameColor(piece.getColor());
     }
 
     public List<Position> getInitialPositions() {
@@ -88,9 +87,8 @@ public enum InitialPiecePosition {
         return piece;
     }
 
-    // TODO: getter말고 물어보기
     public boolean isPawnFirstMove(final Position position) {
-        return piece.getPieceType() == PieceType.PAWN &&
+        return piece.isSameType(PieceType.PAWN) &&
                 initialPositions.contains(position);
     }
 }
