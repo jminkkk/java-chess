@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 import java.util.Collections;
 import java.util.Map;
@@ -42,5 +43,12 @@ public class Board {
 
     public Map<Position, Piece> getBoard() {
         return Collections.unmodifiableMap(board);
+    }
+
+    public boolean isFinish() {
+        int kingCount = (int) board.entrySet().stream()
+                .filter(entry -> entry.getValue().getPieceType() == PieceType.KING)
+                .count();
+        return kingCount < 2;
     }
 }

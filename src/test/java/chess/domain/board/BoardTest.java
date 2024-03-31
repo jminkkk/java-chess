@@ -46,4 +46,35 @@ class BoardTest {
                 .hasMessage("해당 진영의 차례가 아닙니다.");
 
     }
+
+    @Test
+    @DisplayName("King이 잡힐 시에 게임이 종료된다.")
+    void isNotFinish() {
+        Board board = new Board(new BoardInitializer());
+        assertThat(board.isFinish()).isFalse();
+    }
+
+    @Test
+    @DisplayName("King이 잡힐 시에 게임이 종료된다.")
+    void isFinish() {
+        Board board = new Board(new BoardInitializer());
+
+        // RNBQqB.R <- king이 죽는 기보
+        // PPPP..PP
+        // .....P.N
+        // ....P...
+        // ........
+        // ....p...
+        // pppp.ppp
+        // rnb.kbnr
+
+        board.tryMove(Position.of(6, 7), Position.of(6, 6));
+        board.tryMove(Position.of(5, 2), Position.of(5, 3));
+        board.tryMove(Position.of(7, 8), Position.of(8, 6));
+        board.tryMove(Position.of(4, 1), Position.of(8, 5));
+        board.tryMove(Position.of(5, 7), Position.of(5, 5));
+        board.tryMove(Position.of(8, 5), Position.of(5, 8));
+
+        assertThat(board.isFinish()).isTrue();
+    }
 }
