@@ -1,28 +1,35 @@
 package chess.controller;
 
 import chess.domain.board.Board;
-import chess.domain.board.BoardInitializer;
+import chess.domain.board.ClearBoardInitializer;
+import chess.domain.board.SavedBoardInitializer;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
 import chess.domain.scorerule.Referee;
+import chess.service.ChessGameService;
 import chess.view.GameCommand;
 import chess.view.InputView;
 import chess.view.OutputView;
+import java.util.Objects;
 
 public class ChessGameController {
 
     private final OutputView outputView;
     private final InputView inputView;
+    private final ChessGameService gameService;
 
-    public ChessGameController(final InputView inputView, final OutputView outputView) {
+    public ChessGameController(final InputView inputView, final OutputView outputView,
+                               final ChessGameService gameService) {
         this.inputView = inputView;
         this.outputView = outputView;
+        this.gameService = gameService;
     }
 
     public void start() {
         outputView.printInitialMessage();
         GameCommand gameCommand = inputView.getGameCommand();
         checkStart(gameCommand);
+        checkSavedGameExist();
 
         play();
     }
@@ -30,6 +37,28 @@ public class ChessGameController {
     private void checkStart(final GameCommand gameCommand) {
         if (gameCommand != GameCommand.START) {
             throw new IllegalArgumentException("시작 명령어를 입력해주세요.");
+        }
+    }
+
+    private void checkSavedGameExist() {
+        if (gameService.existGame()) {
+            outputView.printSaveGameMessage();
+
+            processSavedGame();
+        }
+    }
+
+    private void processSavedGame() {
+        String saveGameStart = inputView.getSaveGameStart();
+        if (Objects.equals(saveGameStart, "y")) {
+            Board savedBoard = new Board(new SavedBoardInitializer(gameService.findAllPiece()), gameService.findTurn());
+            outputView.printBoard(savedBoard);
+            processGame(savedBoard);
+        }
+
+        if (Objects.equals(saveGameStart, "n")) {
+            gameService.deleteAll();
+            play();
         }
     }
 
@@ -45,12 +74,15 @@ public class ChessGameController {
             processCommand(gameCommand, board);
             if (board.isFinish()) {
                 outputView.printFinish();
+                gameService.deleteAll();
                 return;
             }
+
             gameCommand = inputView.getGameCommand();
         }
 
         restartGameIfRequested(gameCommand);
+        saveGameIfEnd(gameCommand, board);
     }
 
     private boolean isGameContinuing(GameCommand gameCommand) {
@@ -72,8 +104,15 @@ public class ChessGameController {
         }
     }
 
+    private void saveGameIfEnd(GameCommand gameCommand, final Board board) {
+        if (gameCommand == GameCommand.END) {
+            gameService.deleteAll();
+            gameService.save(board);
+        }
+    }
+
     private Board initializeBoard() {
-        Board board = new Board(new BoardInitializer());
+        Board board = new Board(new ClearBoardInitializer());
         outputView.printBoard(board);
         return board;
     }
