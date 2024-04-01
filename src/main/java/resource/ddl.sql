@@ -2,9 +2,6 @@ DROP DATABASE chess;
 CREATE DATABASE chess DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 SHOW TABLES in chess;
 USE chess;
-SHOW COLUMNS FROM Piece;
-SELECT *
-FROM Piece;
 
 CREATE TABLE Turn
 (
