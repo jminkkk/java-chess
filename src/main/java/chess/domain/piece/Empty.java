@@ -7,7 +7,7 @@ import java.util.Map;
 public class Empty extends NotAttackPiece {
     private static final Empty EMPTY = new Empty();
 
-    public Empty() {
+    private Empty() {
         super(PieceType.EMPTY, Color.NONE);
     }
 
