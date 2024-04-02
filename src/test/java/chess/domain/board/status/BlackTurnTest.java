@@ -59,6 +59,13 @@ class BlackTurnTest {
     }
 
     @Test
+    @DisplayName("현재 차례 조회 시 검정울 반환한다.")
+    void getTurn() {
+        BlackTurn blackTurn = new BlackTurn(new Board(new ClearBoardInitializer()));
+        assertThat(blackTurn.getTurn()).isEqualTo(Color.BLACK);
+    }
+
+    @Test
     @DisplayName("게임 종료를 물어볼 경우 항상 거짓을 반환한다.")
     void isFinished() {
         BlackTurn blackTurn = new BlackTurn(new Board(new ClearBoardInitializer()));

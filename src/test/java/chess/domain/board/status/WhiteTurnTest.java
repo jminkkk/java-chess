@@ -18,6 +18,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class WhiteTurnTest {
+
     @Test
     @DisplayName("Piece가 이동을 했다면 블랙 팀의 차례를 나타내는 상태를 반환한다.")
     void successMoveThenReturnWhiteTurn() {
@@ -55,6 +56,13 @@ class WhiteTurnTest {
         assertThatThrownBy(() -> whiteTurn.move(Position.of(1, 2), Position.of(1, 1)))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 이동이 불가능합니다.");
+    }
+
+    @Test
+    @DisplayName("현재 차례 조회 시 화이트를 반환한다.")
+    void getTurn() {
+        WhiteTurn whiteTurn = new WhiteTurn(new Board(new ClearBoardInitializer()));
+        assertThat(whiteTurn.getTurn()).isEqualTo(Color.WHITE);
     }
 
     @Test
