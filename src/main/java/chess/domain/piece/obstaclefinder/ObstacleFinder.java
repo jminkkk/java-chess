@@ -1,4 +1,4 @@
-package chess.domain.piece.attacker;
+package chess.domain.piece.obstaclefinder;
 
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
@@ -16,7 +16,7 @@ public interface ObstacleFinder {
                                                     final Piece targetPiece,
                                                     final List<Position> obstacles) {
         if (obstacles.contains(target)
-                && sourcePiece.isNotSameTeam(targetPiece)) {
+                && !sourcePiece.isSameTeam(targetPiece)) {
             obstacles.remove(target);
         }
     }

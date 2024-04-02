@@ -15,8 +15,8 @@ public abstract class Piece {
 
     public abstract boolean canMove(final Position source, final Position target, final Map<Position, Piece> pieces);
 
-    public boolean isNotSameTeam(final Piece piece) {
-        return !color.isSameColor(piece.color);
+    public boolean isSameTeam(final Piece piece) {
+        return color.isSameColor(piece.color);
     }
 
     public boolean isSameTeamColor(final Color color) {

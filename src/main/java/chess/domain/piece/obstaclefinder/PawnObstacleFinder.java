@@ -1,4 +1,4 @@
-package chess.domain.piece.attacker;
+package chess.domain.piece.obstaclefinder;
 
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
@@ -32,7 +32,7 @@ public class PawnObstacleFinder implements ObstacleFinder {
     // 도착 위치가 상대편 말이지만 출발 위치와 도착 위치가 직선 이동일 경우
     private boolean canNotKillTargetByStraightMove(final Position source, final Position target,
                                                    final Piece sourcePiece, final Piece targetPiece) {
-        return targetPiece.isNotSameTeam(sourcePiece) &&
+        return !targetPiece.isSameTeam(sourcePiece) &&
                 !targetPiece.isEmpty() &&
                 source.isRankMove(target);
     }
