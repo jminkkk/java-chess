@@ -1,10 +1,10 @@
-package chess.domain;
+package chess.domain.game;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
-import chess.domain.board.status.BlackTurn;
-import chess.domain.board.status.GameStatus;
-import chess.domain.board.status.WhiteTurn;
+import chess.domain.game.status.BlackTurn;
+import chess.domain.game.status.GameStatus;
+import chess.domain.game.status.WhiteTurn;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;

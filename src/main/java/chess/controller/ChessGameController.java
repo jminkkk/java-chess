@@ -1,8 +1,8 @@
 package chess.controller;
 
-import chess.domain.Game;
 import chess.domain.board.ClearBoardInitializer;
 import chess.domain.board.SavedBoardInitializer;
+import chess.domain.game.Game;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;

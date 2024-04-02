@@ -1,4 +1,4 @@
-package chess.domain.piece.attacker;
+package chess.domain.piece.obstaclefinder;
 
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;

@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.movement.Movement;
-import chess.domain.piece.attacker.KnightObstacleFinder;
+import chess.domain.piece.obstaclefinder.KnightObstacleFinder;
 import chess.domain.piece.obstaclefinder.ObstacleFinder;
 import chess.domain.position.Position;
 import java.util.Map;

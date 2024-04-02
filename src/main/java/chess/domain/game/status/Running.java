@@ -1,4 +1,4 @@
-package chess.domain.board.status;
+package chess.domain.game.status;
 
 import chess.domain.board.Board;
 

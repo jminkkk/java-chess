@@ -5,8 +5,8 @@ import static chess.domain.pixture.PieceFixture.WHITE_PAWN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.domain.Game;
 import chess.domain.board.SavedBoardInitializer;
+import chess.domain.game.Game;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
 import chess.repository.piece.FakePieceDao;
