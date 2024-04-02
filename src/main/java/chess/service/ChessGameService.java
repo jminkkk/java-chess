@@ -1,7 +1,7 @@
 package chess.service;
 
-import chess.domain.board.Board;
-import chess.domain.board.Turn;
+import chess.domain.Game;
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.repository.piece.PieceDao;
@@ -22,9 +22,9 @@ public class ChessGameService {
         this.turnDao = turnDao;
     }
 
-    public void save(final Board board) {
-        saveAllPiece(board.getBoard());
-        saveTurn(board.getTurn());
+    public void save(final Game game) {
+        saveAllPiece(game.getBoard());
+        saveTurn(game.getTurn());
     }
 
     private void saveAllPiece(final Map<Position, Piece> pieces) {
@@ -33,8 +33,8 @@ public class ChessGameService {
                 .forEach(pieceDao::save);
     }
 
-    private void saveTurn(final Turn turn) {
-        turnDao.save(TurnDto.of(turn));
+    private void saveTurn(final Color color) {
+        turnDao.save(TurnDto.of(color));
     }
 
     public Map<Position, Piece> findAllPiece() {
@@ -43,7 +43,7 @@ public class ChessGameService {
                 .collect(Collectors.toMap(PieceDto::getPositionFrom, PieceDto::getPieceFrom));
     }
 
-    public Turn findTurn() {
+    public Color findTurn() {
         TurnDto turnDto = turnDao.findAll().get(0);
         return turnDto.from();
     }

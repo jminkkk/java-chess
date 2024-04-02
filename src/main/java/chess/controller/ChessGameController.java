@@ -1,15 +1,17 @@
 package chess.controller;
 
-import chess.domain.board.Board;
+import chess.domain.Game;
 import chess.domain.board.ClearBoardInitializer;
 import chess.domain.board.SavedBoardInitializer;
 import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.scorerule.Referee;
 import chess.service.ChessGameService;
 import chess.view.GameCommand;
 import chess.view.InputView;
 import chess.view.OutputView;
+import java.util.Map;
 
 public class ChessGameController {
 
@@ -49,9 +51,10 @@ public class ChessGameController {
 
     private void processSavedGame() {
         if (inputView.isSavedGameStart()) {
-            Board savedBoard = new Board(new SavedBoardInitializer(gameService.findAllPiece()), gameService.findTurn());
-            outputView.printBoard(savedBoard);
-            processGame(savedBoard);
+            Game game = Game.of(new SavedBoardInitializer(gameService.findAllPiece()), gameService.findTurn());
+            outputView.printBoard(game.getBoard());
+            outputView.printCurrentTurn(game.getTurn());
+            processGame(game);
             return;
         }
 
@@ -60,16 +63,16 @@ public class ChessGameController {
     }
 
     private void play() {
-        Board board = initializeBoard();
-        processGame(board);
+        Game game = initializeGame();
+        processGame(game);
     }
 
-    private void processGame(Board board) {
+    private void processGame(final Game game) {
         GameCommand gameCommand = inputView.getGameCommand();
 
         while (gameCommand.isContinuing()) {
-            processCommand(gameCommand, board);
-            if (board.isFinish()) {
+            processCommand(gameCommand, game);
+            if (game.isFinish()) {
                 outputView.printFinish();
                 gameService.delete();
                 return;
@@ -79,47 +82,47 @@ public class ChessGameController {
         }
 
         restartGameIfRequested(gameCommand);
-        saveGameIfEnd(gameCommand, board);
+        saveGameIfEnd(gameCommand, game);
     }
 
-    private void processCommand(GameCommand gameCommand, Board board) {
+    private void processCommand(final GameCommand gameCommand, final Game game) {
         if (gameCommand == GameCommand.MOVE) {
-            playTurn(board);
+            playTurn(game);
         }
         if (gameCommand == GameCommand.STATUS) {
-            viewScore(board);
+            viewScore(game.getBoard());
         }
     }
 
-    private void restartGameIfRequested(GameCommand gameCommand) {
+    private void restartGameIfRequested(final GameCommand gameCommand) {
         if (gameCommand == GameCommand.START) {
             play();
         }
     }
 
-    private void saveGameIfEnd(GameCommand gameCommand, final Board board) {
+    private void saveGameIfEnd(final GameCommand gameCommand, final Game game) {
         if (gameCommand == GameCommand.END) {
             gameService.delete();
-            gameService.save(board);
+            gameService.save(game);
         }
     }
 
-    private Board initializeBoard() {
-        Board board = new Board(new ClearBoardInitializer());
-        outputView.printBoard(board);
-        return board;
+    private Game initializeGame() {
+        Game game = new Game(new ClearBoardInitializer());
+        outputView.printBoard(game.getBoard());
+        return game;
     }
 
-    private void playTurn(final Board board) {
+    private void playTurn(final Game game) {
         Position source = Position.of(inputView.getPosition());
         Position target = Position.of(inputView.getPosition());
 
-        board.tryMove(source, target);
-        outputView.printBoard(board);
+        game.move(source, target);
+        outputView.printBoard(game.getBoard());
     }
 
-    private void viewScore(final Board board) {
-        Referee referee = new Referee(board.getBoard());
+    private void viewScore(final Map<Position, Piece> board) {
+        Referee referee = new Referee(board);
 
         double blackTeamScore = referee.calculateScore(Color.BLACK);
         outputView.printScore(blackTeamScore, Color.BLACK);

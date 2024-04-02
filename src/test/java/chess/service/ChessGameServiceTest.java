@@ -5,9 +5,8 @@ import static chess.domain.pixture.PieceFixture.WHITE_PAWN;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-import chess.domain.board.Board;
+import chess.domain.Game;
 import chess.domain.board.SavedBoardInitializer;
-import chess.domain.board.Turn;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
 import chess.repository.piece.FakePieceDao;
@@ -25,7 +24,7 @@ class ChessGameServiceTest {
     private ChessGameService chessGameService;
     private PieceDao pieceDao;
     private TurnDao turnDao;
-    private Board board;
+    private Game game;
 
     @BeforeEach
     void init() {
@@ -33,26 +32,25 @@ class ChessGameServiceTest {
         turnDao = new FakeTurnDao();
         chessGameService = new ChessGameService(pieceDao, turnDao);
 
-        board = new Board(new SavedBoardInitializer(
+        game = new Game(new SavedBoardInitializer(
                 Map.of(Position.of(1, 1), BLACK_PAWN.getPiece(), Position.of(3, 1), WHITE_PAWN.getPiece())));
     }
 
     @Test
     @DisplayName("현재 Board를 저장한다.")
     void save() {
-        chessGameService.save(board);
-
+        chessGameService.save(game);
         assertAll(
                 () -> assertThat(pieceDao.findAll()).containsExactlyInAnyOrder(
                         PieceDto.of(BLACK_PAWN.getPiece(), Position.of(1, 1)),
                         PieceDto.of(WHITE_PAWN.getPiece(), Position.of(3, 1))),
-                () -> assertThat(turnDao.findAll()).containsExactly(TurnDto.of(new Turn(Color.BLACK))));
+                () -> assertThat(turnDao.findAll()).containsExactly(TurnDto.of(Color.BLACK)));
     }
 
     @Test
     @DisplayName("저장된 위치별 피스를 조회한다.")
     void findAllPiece() {
-        chessGameService.save(board);
+        chessGameService.save(game);
         assertThat(chessGameService.findAllPiece()).containsExactlyInAnyOrderEntriesOf(
                 Map.of(Position.of(1, 1), BLACK_PAWN.getPiece(),
                         Position.of(3, 1), WHITE_PAWN.getPiece()));
@@ -68,7 +66,7 @@ class ChessGameServiceTest {
     @Test
     @DisplayName("저장된 게임이 있는지 확인한다.")
     void existGame() {
-        chessGameService.save(board);
+        chessGameService.save(game);
         assertThat(chessGameService.existGame()).isTrue();
     }
 
