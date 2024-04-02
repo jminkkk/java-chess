@@ -39,7 +39,7 @@ class ChessGameServiceTest {
     @Test
     @DisplayName("현재 Board를 저장한다.")
     void save() {
-        chessGameService.save(game);
+        chessGameService.saveGame(game);
         assertAll(
                 () -> assertThat(pieceDao.findAll()).containsExactlyInAnyOrder(
                         PieceDto.of(BLACK_PAWN.getPiece(), Position.of(1, 1)),
@@ -50,7 +50,7 @@ class ChessGameServiceTest {
     @Test
     @DisplayName("저장된 위치별 피스를 조회한다.")
     void findAllPiece() {
-        chessGameService.save(game);
+        chessGameService.saveGame(game);
         assertThat(chessGameService.findAllPiece()).containsExactlyInAnyOrderEntriesOf(
                 Map.of(Position.of(1, 1), BLACK_PAWN.getPiece(),
                         Position.of(3, 1), WHITE_PAWN.getPiece()));
@@ -66,14 +66,14 @@ class ChessGameServiceTest {
     @Test
     @DisplayName("저장된 게임이 있는지 확인한다.")
     void existGame() {
-        chessGameService.save(game);
-        assertThat(chessGameService.existGame()).isTrue();
+        chessGameService.saveGame(game);
+        assertThat(chessGameService.existSavedGame()).isTrue();
     }
 
     @Test
     @DisplayName("저장된 게임이 있는지 확인한다.")
     void notExistGame() {
         chessGameService.delete();
-        assertThat(chessGameService.existGame()).isFalse();
+        assertThat(chessGameService.existSavedGame()).isFalse();
     }
 }

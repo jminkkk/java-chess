@@ -22,7 +22,19 @@ public class ChessGameService {
         this.turnDao = turnDao;
     }
 
-    public void save(final Game game) {
+    public Map<Position, Piece> findAllPiece() {
+        List<PieceDto> piecesWithPosition = pieceDao.findAll();
+        return piecesWithPosition.stream()
+                .collect(Collectors.toMap(PieceDto::getPositionFrom, PieceDto::getPieceFrom));
+    }
+
+    public Color findTurn() {
+        TurnDto turnDto = turnDao.findAll().get(0);
+        return turnDto.from();
+    }
+
+    public void saveGame(final Game game) {
+        delete();
         saveAllPiece(game.getBoard());
         saveTurn(game.getTurn());
     }
@@ -37,23 +49,12 @@ public class ChessGameService {
         turnDao.save(TurnDto.of(color));
     }
 
-    public Map<Position, Piece> findAllPiece() {
-        List<PieceDto> piecesWithPosition = pieceDao.findAll();
-        return piecesWithPosition.stream()
-                .collect(Collectors.toMap(PieceDto::getPositionFrom, PieceDto::getPieceFrom));
-    }
-
-    public Color findTurn() {
-        TurnDto turnDto = turnDao.findAll().get(0);
-        return turnDto.from();
-    }
-
     public void delete() {
         pieceDao.deleteAll();
         turnDao.deleteAll();
     }
 
-    public boolean existGame() {
+    public boolean existSavedGame() {
         return findAllPiece().size() != 0;
     }
 }
