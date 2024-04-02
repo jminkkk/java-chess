@@ -60,37 +60,52 @@ public class ChessGameController {
     private void execute(final Game game) {
         GameCommand gameCommand = inputView.getGameCommand();
 
-        // TODO: depth 고려
-        while (true) {
-
-            if (gameCommand == GameCommand.START) {
-                playNewGame();
-                break;
-            }
-
-            if (gameCommand == GameCommand.MOVE) {
-                executeTurn(game);
-
-                if (game.isFinish()) {
-                    outputView.printFinish();
-                    gameService.delete();
-                    break;
-                }
-            }
-
-            if (gameCommand == GameCommand.STATUS) {
-                viewScore(game.getBoard());
-            }
-
-            if (gameCommand == GameCommand.END) {
-                gameService.saveGame(game);
-                break;
-            }
-
+        while (executeGameActionIfOngoing(game, gameCommand)) {
+            executeMoveCommand(game, gameCommand);
+            executeStatusCommand(game, gameCommand);
             gameCommand = inputView.getGameCommand();
+        }
+
+        checkGameRestart(gameCommand);
+        checkGameFinish(game);
+        checkGameTerminate(game, gameCommand);
+    }
+
+    private boolean executeGameActionIfOngoing(final Game game, final GameCommand gameCommand) {
+        return !game.isFinish()
+                && gameCommand != GameCommand.START && gameCommand != GameCommand.END;
+    }
+
+    private void executeMoveCommand(final Game game, final GameCommand gameCommand) {
+        if (gameCommand == GameCommand.MOVE) {
+            executeTurn(game);
         }
     }
 
+    private void executeStatusCommand(final Game game, final GameCommand gameCommand) {
+        if (gameCommand == GameCommand.STATUS) {
+            viewScore(game.getBoard());
+        }
+    }
+
+    private void checkGameRestart(final GameCommand gameCommand) {
+        if (gameCommand == GameCommand.START) {
+            playNewGame();
+        }
+    }
+
+    private void checkGameFinish(final Game game) {
+        if (game.isFinish()) {
+            outputView.printFinish();
+            gameService.delete();
+        }
+    }
+
+    private void checkGameTerminate(final Game game, final GameCommand gameCommand) {
+        if (gameCommand == GameCommand.END) {
+            gameService.saveGame(game);
+        }
+    }
 
     private void executeTurn(final Game game) {
         Position source = Position.of(inputView.getPosition());
