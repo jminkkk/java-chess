@@ -28,11 +28,14 @@ public class ChessGameController {
 
     public void start() {
         outputView.printInitialMessage();
-        GameCommand gameCommand = inputView.getGameCommand();
-        checkStart(gameCommand);
-        checkSavedGameExist();
+        checkStart(inputView.getGameCommand());
 
-        play();
+        if (gameService.existSavedGame() && inputView.isPlaySavedGame()) {
+            playSavedGame();
+            return;
+        }
+
+        playNewGame();
     }
 
     private void checkStart(final GameCommand gameCommand) {
@@ -41,79 +44,55 @@ public class ChessGameController {
         }
     }
 
-    private void checkSavedGameExist() {
-        if (gameService.existGame()) {
-            outputView.printSaveGameMessage();
-
-            processSavedGame();
-        }
+    private void playSavedGame() {
+        Game game = Game.of(new SavedBoardInitializer(gameService.findAllPiece()), gameService.findTurn());
+        outputView.printBoard(game.getBoard());
+        outputView.printCurrentTurn(game.getTurn());
+        execute(game);
     }
 
-    private void processSavedGame() {
-        if (inputView.isSavedGameStart()) {
-            Game game = Game.of(new SavedBoardInitializer(gameService.findAllPiece()), gameService.findTurn());
-            outputView.printBoard(game.getBoard());
-            outputView.printCurrentTurn(game.getTurn());
-            processGame(game);
-            return;
-        }
-
-        gameService.delete();
-        play();
+    private void playNewGame() {
+        Game game = new Game(new ClearBoardInitializer());
+        outputView.printBoard(game.getBoard());
+        execute(game);
     }
 
-    private void play() {
-        Game game = initializeGame();
-        processGame(game);
-    }
-
-    private void processGame(final Game game) {
+    private void execute(final Game game) {
         GameCommand gameCommand = inputView.getGameCommand();
 
-        while (gameCommand.isContinuing()) {
-            processCommand(gameCommand, game);
-            if (game.isFinish()) {
-                outputView.printFinish();
-                gameService.delete();
-                return;
+        // TODO: depth 고려
+        while (true) {
+
+            if (gameCommand == GameCommand.START) {
+                playNewGame();
+                break;
+            }
+
+            if (gameCommand == GameCommand.MOVE) {
+                executeTurn(game);
+
+                if (game.isFinish()) {
+                    outputView.printFinish();
+                    gameService.delete();
+                    break;
+                }
+            }
+
+            if (gameCommand == GameCommand.STATUS) {
+                viewScore(game.getBoard());
+            }
+
+            if (gameCommand == GameCommand.END) {
+                gameService.saveGame(game);
+                break;
             }
 
             gameCommand = inputView.getGameCommand();
         }
-
-        restartGameIfRequested(gameCommand);
-        saveGameIfEnd(gameCommand, game);
     }
 
-    private void processCommand(final GameCommand gameCommand, final Game game) {
-        if (gameCommand == GameCommand.MOVE) {
-            playTurn(game);
-        }
-        if (gameCommand == GameCommand.STATUS) {
-            viewScore(game.getBoard());
-        }
-    }
 
-    private void restartGameIfRequested(final GameCommand gameCommand) {
-        if (gameCommand == GameCommand.START) {
-            play();
-        }
-    }
-
-    private void saveGameIfEnd(final GameCommand gameCommand, final Game game) {
-        if (gameCommand == GameCommand.END) {
-            gameService.delete();
-            gameService.save(game);
-        }
-    }
-
-    private Game initializeGame() {
-        Game game = new Game(new ClearBoardInitializer());
-        outputView.printBoard(game.getBoard());
-        return game;
-    }
-
-    private void playTurn(final Game game) {
+    private void executeTurn(final Game game) {
         Position source = Position.of(inputView.getPosition());
         Position target = Position.of(inputView.getPosition());
 
