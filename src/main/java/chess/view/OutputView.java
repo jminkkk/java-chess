@@ -48,10 +48,6 @@ public class OutputView {
         System.out.println("King이 잡혔습니다. 게임을 종료합니다.");
     }
 
-    public void printSaveGameMessage() {
-        System.out.println("저장된 게임이 있습니다. 이어하시겠습니까? (y or n)");
-    }
-
     public void printCurrentTurn(final Color color) {
         System.out.println(ColorDisplay.getValue(color) + "팀 차례입니다.");
     }

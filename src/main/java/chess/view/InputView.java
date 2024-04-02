@@ -24,7 +24,8 @@ public class InputView {
         }
     }
 
-    public boolean isSavedGameStart() {
+    public boolean isPlaySavedGame() {
+        System.out.println("저장된 게임이 있습니다. 이어하시겠습니까? (y or n)");
         String option = scanner.next();
         validateSaveGameOption(option);
         return Objects.equals(option, "y");
