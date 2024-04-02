@@ -10,7 +10,6 @@ import chess.service.ChessGameService;
 import chess.view.GameCommand;
 import chess.view.InputView;
 import chess.view.OutputView;
-import java.util.Objects;
 
 public class ChessGameController {
 
@@ -49,17 +48,15 @@ public class ChessGameController {
     }
 
     private void processSavedGame() {
-        String saveGameStart = inputView.getSaveGameStart();
-        if (Objects.equals(saveGameStart, "y")) {
+        if (inputView.isSavedGameStart()) {
             Board savedBoard = new Board(new SavedBoardInitializer(gameService.findAllPiece()), gameService.findTurn());
             outputView.printBoard(savedBoard);
             processGame(savedBoard);
+            return;
         }
 
-        if (Objects.equals(saveGameStart, "n")) {
-            gameService.delete();
-            play();
-        }
+        gameService.delete();
+        play();
     }
 
     private void play() {

@@ -24,10 +24,10 @@ public class InputView {
         }
     }
 
-    public String getSaveGameStart() {
+    public boolean isSavedGameStart() {
         String option = scanner.next();
         validateSaveGameOption(option);
-        return option;
+        return Objects.equals(option, "y");
     }
 
     private void validateSaveGameOption(final String option) {
