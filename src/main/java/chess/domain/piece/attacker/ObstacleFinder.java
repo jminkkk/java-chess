@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
-public interface Attacker {
+public interface ObstacleFinder {
 
     List<Position> findObstacle(final Position source, final Position target,
                                 final Map<Position, Piece> pieces);
