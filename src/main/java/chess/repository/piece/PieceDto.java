@@ -11,6 +11,7 @@ import static chess.view.PieceSymbol.ROOK;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Color;
 import chess.domain.piece.Empty;
+import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
@@ -27,7 +28,7 @@ public record PieceDto(String color, String pieceType, int file, int rank) {
 
     public Piece getPieceFrom() {
         if (Objects.equals(pieceType, KING.name())) {
-            return new Knight(Color.valueOf(color));
+            return new King(Color.valueOf(color));
         }
         if (Objects.equals(pieceType, QUEEN.name())) {
             return new Queen(Color.valueOf(color));
@@ -45,7 +46,7 @@ public record PieceDto(String color, String pieceType, int file, int rank) {
             return new Bishop(Color.valueOf(color));
         }
         if (Objects.equals(pieceType, EMPTY.name())) {
-            return new Empty();
+            return Empty.getInstance();
         }
 
         return null;
