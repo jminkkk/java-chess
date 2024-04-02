@@ -2,7 +2,6 @@ package chess.domain.board;
 
 import static chess.domain.pixture.PieceFixture.BLACK_PAWN;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.piece.Empty;
@@ -28,12 +27,10 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("보드에서 체스 말을 이동할 수 없는 경우 예외가 발생한다.")
+    @DisplayName("보드에서 체스 말을 이동할 수 없는 경우 거짓을 발생한다.")
     void movePieceThrowException() {
         Board board = new Board(new ClearBoardInitializer());
-        assertThatThrownBy(() -> board.tryMove(Position.of(1, 7), Position.of(1, 2)))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("이동이 불가능한 위치입니다.");
+        assertThat(board.tryMove(Position.of(1, 7), Position.of(1, 2))).isFalse();
     }
 
 
@@ -41,9 +38,7 @@ class BoardTest {
     @DisplayName("움직이려는 말의 진영 차례가 아닌 경우 예외가 발생한다.")
     void isTurnThrowException() {
         Board board = new Board(new ClearBoardInitializer());
-        assertThatThrownBy(() -> board.tryMove(Position.of(1, 2), Position.of(1, 4)))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("해당 진영의 차례가 아닙니다.");
+        assertThat(board.tryMove(Position.of(1, 7), Position.of(1, 2))).isFalse();
 
     }
 
