@@ -61,7 +61,6 @@ public record Position(File file, Rank rank) {
                 && rank.canMoveOneSpace(target.rank);
     }
 
-    // TODO: Test 추가
     public boolean isRankMove(final Position target) {
         return this.file == target.file;
     }
