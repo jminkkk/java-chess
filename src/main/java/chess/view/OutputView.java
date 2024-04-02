@@ -1,6 +1,5 @@
 package chess.view;
 
-import chess.domain.board.Board;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
@@ -25,8 +24,7 @@ public class OutputView {
         System.out.println(commandMessage);
     }
 
-    public void printBoard(final Board board) {
-        Map<Position, Piece> positions = board.getBoard();
+    public void printBoard(final Map<Position, Piece> positions) {
         for (int rank = MAXIMUM_RANK_RANGE; rank >= MINIMUM_RANK_RANGE; rank--) {
             printRankLine(positions, rank);
         }
@@ -52,5 +50,9 @@ public class OutputView {
 
     public void printSaveGameMessage() {
         System.out.println("저장된 게임이 있습니다. 이어하시겠습니까? (y or n)");
+    }
+
+    public void printCurrentTurn(final Color color) {
+        System.out.println(ColorDisplay.getValue(color) + "팀 차례입니다.");
     }
 }
