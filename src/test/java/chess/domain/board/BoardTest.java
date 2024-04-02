@@ -51,7 +51,7 @@ class BoardTest {
     @DisplayName("King이 잡힐 시에 게임이 종료된다.")
     void isNotFinish() {
         Board board = new Board(new ClearBoardInitializer());
-        assertThat(board.isFinish()).isFalse();
+        assertThat(board.isKingKilled()).isFalse();
     }
 
     @Test
@@ -75,6 +75,6 @@ class BoardTest {
         board.tryMove(Position.of(5, 7), Position.of(5, 5));
         board.tryMove(Position.of(8, 5), Position.of(5, 8));
 
-        assertThat(board.isFinish()).isTrue();
+        assertThat(board.isKingKilled()).isTrue();
     }
 }
