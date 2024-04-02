@@ -9,6 +9,11 @@ public abstract class Running implements GameStatus {
         this.board = board;
     }
 
+    @Override
+    public boolean isFinish() {
+        return false;
+    }
+
     protected Board board() {
         return board;
     }
