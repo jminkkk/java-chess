@@ -1,10 +1,9 @@
 package chess.domain.piece;
 
-import chess.domain.piece.attacker.NotAttackPiece;
 import chess.domain.position.Position;
 import java.util.Map;
 
-public class Empty extends NotAttackPiece {
+public class Empty extends Piece {
     private static final Empty EMPTY = new Empty();
 
     private Empty() {
