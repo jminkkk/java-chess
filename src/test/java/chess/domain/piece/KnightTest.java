@@ -11,7 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-public class KnightTest {
+class KnightTest {
 
     /*
      * ........
@@ -27,7 +27,8 @@ public class KnightTest {
     @CsvSource({"5,6", "5,2", "3,6", "3,2", "6,5", "6,3", "2,5", "2,3"})
     @DisplayName("나이트는 도착 위치가 비어있는 경우 이동할 수 있다.")
     void canMoveWhenTargetIsEmpty(int file, int rank) {
-        assertThat(WHITE_KNIGHT.getPiece().canMove(Position.of(4, 4), Position.of(file, rank), Map.of())).isTrue();
+        assertThat(WHITE_KNIGHT.getPiece().canMove(Position.of(4, 4), Position.of(file, rank),
+                Map.of(Position.of(4, 4), WHITE_KNIGHT.getPiece()))).isTrue();
     }
 
     /*
@@ -45,7 +46,8 @@ public class KnightTest {
     @DisplayName("나이트는 도착 위치에 상대편 말이 있는 경우 이동할 수 있다.")
     void canMoveWhenTargetIsOtherColor(int file, int rank) {
         assertThat(WHITE_KNIGHT.getPiece().canMove(Position.of(4, 4), Position.of(file, rank),
-                Map.of(Position.of(file, rank), BLACK_QUEEN.getPiece()))).isTrue();
+                Map.of(Position.of(4, 4), WHITE_KNIGHT.getPiece(),
+                        Position.of(file, rank), BLACK_QUEEN.getPiece()))).isTrue();
     }
 
     /*
