@@ -70,7 +70,7 @@ public class ChessGameController {
     private void processGame(Board board) {
         GameCommand gameCommand = inputView.getGameCommand();
 
-        while (isGameContinuing(gameCommand)) {
+        while (gameCommand.isContinuing()) {
             processCommand(gameCommand, board);
             if (board.isFinish()) {
                 outputView.printFinish();
@@ -83,10 +83,6 @@ public class ChessGameController {
 
         restartGameIfRequested(gameCommand);
         saveGameIfEnd(gameCommand, board);
-    }
-
-    private boolean isGameContinuing(GameCommand gameCommand) {
-        return gameCommand == GameCommand.MOVE || gameCommand == GameCommand.STATUS;
     }
 
     private void processCommand(GameCommand gameCommand, Board board) {

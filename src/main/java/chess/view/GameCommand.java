@@ -26,4 +26,8 @@ public enum GameCommand {
     public String getHelperMessage() {
         return helperMassage;
     }
+
+    public boolean isContinuing() {
+        return this == GameCommand.MOVE || this == GameCommand.STATUS;
+    }
 }
