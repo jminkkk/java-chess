@@ -29,7 +29,7 @@ public class WhiteTurn extends Running {
 
     private GameStatus checkKingKilled() {
         if (board().isKingKilled()) {
-            return new Finished(board());
+            return new Finished();
         }
         return new BlackTurn(board());
     }

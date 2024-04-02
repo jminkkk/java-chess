@@ -4,11 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
 
-public class Finished extends Running {
-    protected Finished(final Board board) {
-        super(board);
-    }
-
+public class Finished implements GameStatus {
     @Override
     public GameStatus move(final Position source, final Position target) {
         throw new IllegalStateException("게임이 종료되어 이동이 불가능합니다.");
@@ -24,8 +20,7 @@ public class Finished extends Running {
         throw new IllegalStateException("게임이 종료되어 턴을 조회할 수 없습니다.");
     }
 
-    @Override
     public Board getBoard() {
-        return board();
+        throw new IllegalStateException("게임이 종료되어 보드를 조회할 수 없습니다.");
     }
 }
