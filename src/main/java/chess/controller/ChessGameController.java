@@ -60,7 +60,7 @@ public class ChessGameController {
     private void execute(final Game game) {
         GameCommand gameCommand = inputView.getGameCommand();
 
-        while (executeGameActionIfOngoing(game, gameCommand)) {
+        while (isGameActionIfOngoing(game, gameCommand)) {
             executeMoveCommand(game, gameCommand);
             executeStatusCommand(game, gameCommand);
             gameCommand = inputView.getGameCommand();
@@ -71,9 +71,10 @@ public class ChessGameController {
         checkGameTerminate(game, gameCommand);
     }
 
-    private boolean executeGameActionIfOngoing(final Game game, final GameCommand gameCommand) {
+    private boolean isGameActionIfOngoing(final Game game, final GameCommand gameCommand) {
         return !game.isFinish()
-                && gameCommand != GameCommand.START && gameCommand != GameCommand.END;
+                && gameCommand != GameCommand.START
+                && gameCommand != GameCommand.END;
     }
 
     private void executeMoveCommand(final Game game, final GameCommand gameCommand) {
