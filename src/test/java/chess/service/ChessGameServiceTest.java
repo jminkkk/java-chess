@@ -44,7 +44,7 @@ class ChessGameServiceTest {
                 () -> assertThat(pieceDao.findAll()).containsExactlyInAnyOrder(
                         PieceDto.of(BLACK_PAWN.getPiece(), Position.of(1, 1)),
                         PieceDto.of(WHITE_PAWN.getPiece(), Position.of(3, 1))),
-                () -> assertThat(turnDao.findAll()).containsExactly(TurnDto.of(Color.BLACK)));
+                () -> assertThat(turnDao.findOne()).isEqualTo(TurnDto.of(Color.BLACK)));
     }
 
     @Test

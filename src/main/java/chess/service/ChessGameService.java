@@ -55,6 +55,6 @@ public class ChessGameService {
     }
 
     public boolean existSavedGame() {
-        return findAllPiece().size() != 0;
+        return pieceDao.existPieces();
     }
 }
