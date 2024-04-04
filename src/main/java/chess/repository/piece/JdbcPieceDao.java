@@ -70,13 +70,20 @@ public class JdbcPieceDao implements PieceDao {
 
     @Override
     public boolean existPieces() {
-        final var query = "SELECT EXISTS(SELECT * FROM PIECE)";
+        final var query = "SELECT EXISTS(SELECT 1 FROM PIECE)";
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             final var resultSet = preparedStatement.executeQuery();
-            return resultSet.getBoolean(1);
+            return checkPieceExist(resultSet);
         } catch (SQLException e) {
-            throw new RuntimeException("[METHOD] existPieces [TABLE] piece", e);
+            throw new RuntimeException("[METHOD] existPieces [TABLE] piece" + e.getMessage(), e);
         }
+    }
+
+    private boolean checkPieceExist(final ResultSet resultSet) throws SQLException {
+        if (resultSet.next()) {
+            return resultSet.getBoolean(1);
+        }
+        return false;
     }
 }
