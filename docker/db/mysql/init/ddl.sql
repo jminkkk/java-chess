@@ -1,5 +1,7 @@
-DROP DATABASE chess;
+DROP DATABASE IF EXISTS chess;
 CREATE DATABASE chess DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+GRANT ALL PRIVILEGES ON `chess`.* TO 'user'@'%';
+FLUSH PRIVILEGES;
 SHOW TABLES in chess;
 USE chess;
 
@@ -17,4 +19,3 @@ CREATE TABLE Piece
     `rank`    INT          NOT NULL,
     file      INT          NOT NULL
 );
-
