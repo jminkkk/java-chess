@@ -21,11 +21,13 @@ class JdbcPieceDaoTest {
     }
 
     @Test
+    @DisplayName("Piece 객체와 Position 객체로부터 Piece 정보를 저장한다.")
     void addPiece() {
         assertThatCode(() -> pieceDao.save(new Pawn(Color.WHITE), Position.of(1, 2)));
     }
 
     @Test
+    @DisplayName("전체 피스와 포지션을 조회한다.")
     void findAll() {
         Piece pawn = new Pawn(Color.WHITE);
         Position position = Position.of(1, 2);
@@ -35,19 +37,20 @@ class JdbcPieceDaoTest {
     }
 
     @Test
+    @DisplayName("전체 데이터를 삭제한다.")
     void deleteAll() {
         pieceDao.deleteAll();
         assertThat(pieceDao.findAllPiece()).isEqualTo(Map.of());
     }
 
     @Test
-    @DisplayName("Pieces가 DB에 존재하지 않을 경우 거짓을 반환한다.")
+    @DisplayName("Pieces가 존재하지 않을 경우 거짓을 반환한다.")
     void notExistPieces() {
         assertThat(pieceDao.existPieces()).isFalse();
     }
 
     @Test
-    @DisplayName("Pieces가 DB에 존재할 경우 참을 반환한다.")
+    @DisplayName("Pieces가 존재할 경우 참을 반환한다.")
     void existPieces() {
         pieceDao.save(new Pawn(Color.WHITE), Position.of(1, 2));
         assertThat(pieceDao.existPieces()).isTrue();
