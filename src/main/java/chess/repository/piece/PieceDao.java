@@ -1,11 +1,13 @@
 package chess.repository.piece;
 
-import java.util.List;
+import chess.domain.piece.Piece;
+import chess.domain.position.Position;
+import java.util.Map;
 
 public interface PieceDao {
-    void save(final PieceDto pieceDto);
+    void save(final Piece piece, final Position position);
 
-    List<PieceDto> findAll();
+    Map<Position, Piece> findAllPiece();
 
     void deleteAll();
 

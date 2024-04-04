@@ -5,12 +5,9 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.repository.piece.PieceDao;
-import chess.repository.piece.PieceDto;
 import chess.repository.turn.TurnDao;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class ChessGameService {
 
@@ -23,14 +20,11 @@ public class ChessGameService {
     }
 
     public Map<Position, Piece> findAllPiece() {
-        List<PieceDto> piecesWithPosition = pieceDao.findAll();
-        return piecesWithPosition.stream()
-                .collect(Collectors.toMap(PieceDto::getPositionFrom, PieceDto::getPieceFrom));
+        return pieceDao.findAllPiece();
     }
 
     public Optional<Color> findTurn() {
-        Optional<Color> turnDto = turnDao.findAny();
-        return turnDto;
+        return turnDao.findAny();
     }
 
     public void saveGame(final Game game) {
@@ -40,9 +34,8 @@ public class ChessGameService {
     }
 
     private void saveAllPiece(final Map<Position, Piece> pieces) {
-        pieces.entrySet().stream()
-                .map(entry -> PieceDto.of(entry.getValue(), entry.getKey()))
-                .forEach(pieceDao::save);
+        pieces.entrySet()
+                .forEach(entry -> pieceDao.save(entry.getValue(), entry.getKey()));
     }
 
     private void saveTurn(final Color color) {

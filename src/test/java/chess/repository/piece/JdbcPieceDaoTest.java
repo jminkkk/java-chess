@@ -3,7 +3,11 @@ package chess.repository.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import java.util.List;
+import chess.domain.piece.Color;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.position.Position;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,22 +22,22 @@ class JdbcPieceDaoTest {
 
     @Test
     void addPiece() {
-        PieceDto pieceDto = new PieceDto("BLACK", "PAWN", 1, 2);
-        assertThatCode(() -> pieceDao.save(pieceDto));
+        assertThatCode(() -> pieceDao.save(new Pawn(Color.WHITE), Position.of(1, 2)));
     }
 
     @Test
     void findAll() {
-        PieceDto pieceDto = new PieceDto("BLACK", "PAWN", 1, 2);
-        pieceDao.save(pieceDto);
+        Piece pawn = new Pawn(Color.WHITE);
+        Position position = Position.of(1, 2);
+        pieceDao.save(pawn, position);
 
-        assertThat(pieceDao.findAll()).isEqualTo(List.of(pieceDto));
+        assertThat(pieceDao.findAllPiece()).isEqualTo(Map.of(position, pawn));
     }
 
     @Test
     void deleteAll() {
         pieceDao.deleteAll();
-        assertThat(pieceDao.findAll()).isEqualTo(List.of());
+        assertThat(pieceDao.findAllPiece()).isEqualTo(Map.of());
     }
 
     @Test
@@ -45,7 +49,7 @@ class JdbcPieceDaoTest {
     @Test
     @DisplayName("Pieces가 DB에 존재할 경우 참을 반환한다.")
     void existPieces() {
-        pieceDao.save(new PieceDto("BLACK", "PAWN", 1, 2));
+        pieceDao.save(new Pawn(Color.WHITE), Position.of(1, 2));
         assertThat(pieceDao.existPieces()).isTrue();
     }
 }

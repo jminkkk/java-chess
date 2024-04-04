@@ -8,12 +8,14 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import chess.domain.board.SavedBoardInitializer;
 import chess.domain.game.Game;
 import chess.domain.piece.Color;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.repository.piece.FakePieceDao;
 import chess.repository.piece.PieceDao;
-import chess.repository.piece.PieceDto;
 import chess.repository.turn.FakeTurnDao;
 import chess.repository.turn.TurnDao;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
@@ -40,10 +42,12 @@ class ChessGameServiceTest {
     @DisplayName("현재 Board를 저장한다.")
     void save() {
         chessGameService.saveGame(game);
+        Map<Position, Piece> pieces = new LinkedHashMap<>();
+        pieces.put(Position.of(1, 1), new Pawn(Color.BLACK));
+        pieces.put(Position.of(3, 1), new Pawn(Color.WHITE));
+
         assertAll(
-                () -> assertThat(pieceDao.findAll()).containsExactlyInAnyOrder(
-                        PieceDto.of(BLACK_PAWN.getPiece(), Position.of(1, 1)),
-                        PieceDto.of(WHITE_PAWN.getPiece(), Position.of(3, 1))),
+                () -> assertThat(pieceDao.findAllPiece()).containsAllEntriesOf(pieces),
                 () -> assertThat(turnDao.findAny()).isEqualTo(Optional.of(Color.BLACK)));
     }
 

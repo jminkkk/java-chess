@@ -1,25 +1,26 @@
 package chess.repository.piece;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import chess.domain.piece.Piece;
+import chess.domain.position.Position;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class FakePieceDao implements PieceDao {
-    private List<PieceDto> pieces = new LinkedList<>();
+    private Map<Position, Piece> pieces = new LinkedHashMap<>();
 
     @Override
-    public void save(final PieceDto pieceDto) {
-        pieces.add(pieceDto);
+    public void save(final Piece piece, final Position position) {
+        pieces.put(position, piece);
     }
 
     @Override
-    public List<PieceDto> findAll() {
+    public Map<Position, Piece> findAllPiece() {
         return pieces;
     }
 
     @Override
     public void deleteAll() {
-        pieces = new ArrayList<>();
+        pieces = new LinkedHashMap<>();
     }
 
     @Override
