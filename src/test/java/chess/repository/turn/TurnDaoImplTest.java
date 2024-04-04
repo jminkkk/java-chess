@@ -3,8 +3,10 @@ package chess.repository.turn;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-import java.util.List;
+import chess.domain.piece.Color;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class TurnDaoImplTest {
@@ -18,21 +20,25 @@ class TurnDaoImplTest {
 
     @Test
     void addPiece() {
-        TurnDto turnDto = new TurnDto("BLACK");
-        assertThatCode(() -> turnDao.save(turnDto));
+        assertThatCode(() -> turnDao.save(Color.BLACK.name()));
     }
 
+    @Test
+    @DisplayName("DB에서 하나의 Turn을 조회한다.")
+    void findOne() {
+        turnDao.save(Color.BLACK.name());
+        assertThat(turnDao.findAny()).isEqualTo(Optional.of(Color.BLACK));
+    }
 
     @Test
-    void findAll() {
-        TurnDto turnDto = new TurnDto("BLACK");
-        turnDao.save(turnDto);
-        assertThat(turnDao.findAll()).isEqualTo(List.of(turnDto));
+    @DisplayName("DB에서 하나의 Turn을 조회 시 테이블이 비어있는 경우 빈 옵셔널을 반환한다.")
+    void notFindOne() {
+        assertThat(turnDao.findAny()).isEqualTo(Optional.empty());
     }
 
     @Test
     void deleteAll() {
         turnDao.deleteAll();
-        assertThat(turnDao.findAll()).isEqualTo(List.of());
+        assertThat(turnDao.findAny()).isEmpty();
     }
 }

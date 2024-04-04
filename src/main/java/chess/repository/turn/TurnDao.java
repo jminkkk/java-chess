@@ -1,12 +1,13 @@
 package chess.repository.turn;
 
-import java.util.List;
+import chess.domain.piece.Color;
+import java.util.Optional;
 
 public interface TurnDao {
 
-    void save(final TurnDto turnDto);
+    void save(final String color);
 
-    List<TurnDto> findAll();
+    Optional<Color> findAny();
 
     void deleteAll();
 }

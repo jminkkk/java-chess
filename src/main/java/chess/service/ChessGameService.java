@@ -7,9 +7,9 @@ import chess.domain.position.Position;
 import chess.repository.piece.PieceDao;
 import chess.repository.piece.PieceDto;
 import chess.repository.turn.TurnDao;
-import chess.repository.turn.TurnDto;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class ChessGameService {
@@ -28,9 +28,9 @@ public class ChessGameService {
                 .collect(Collectors.toMap(PieceDto::getPositionFrom, PieceDto::getPieceFrom));
     }
 
-    public Color findTurn() {
-        TurnDto turnDto = turnDao.findAll().get(0);
-        return turnDto.from();
+    public Optional<Color> findTurn() {
+        Optional<Color> turnDto = turnDao.findAny();
+        return turnDto;
     }
 
     public void saveGame(final Game game) {
@@ -46,7 +46,7 @@ public class ChessGameService {
     }
 
     private void saveTurn(final Color color) {
-        turnDao.save(TurnDto.of(color));
+        turnDao.save(color.name());
     }
 
     public void delete() {

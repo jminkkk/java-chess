@@ -45,7 +45,9 @@ public class ChessGameController {
     }
 
     private void playSavedGame() {
-        Game game = Game.of(new SavedBoardInitializer(gameService.findAllPiece()), gameService.findTurn());
+        Color turnColor = gameService.findTurn()
+                .orElseThrow(() -> new IllegalStateException("저장된 게임이 정상적이지 않습니다. 다시 실행해주세요."));
+        Game game = Game.of(new SavedBoardInitializer(gameService.findAllPiece()), turnColor);
         outputView.printBoard(game.getBoard());
         outputView.printCurrentTurn(game.getTurn());
         execute(game);

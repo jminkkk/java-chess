@@ -2,18 +2,19 @@ package chess.repository.turn;
 
 import static chess.repository.DatabaseConfig.getConnection;
 
+import chess.domain.piece.Color;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 
 public class TurnDaoImpl implements TurnDao {
 
     @Override
-    public void save(final TurnDto turnDto) {
+    public void save(final String color) {
         final var query = "INSERT INTO turn (turn) VALUES(?)";
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setString(1, turnDto.turnColor());
+            preparedStatement.setString(1, color);
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
             throw new RuntimeException("[METHOD] save [TABLE] turn", e);
@@ -21,25 +22,27 @@ public class TurnDaoImpl implements TurnDao {
     }
 
     @Override
-    public List<TurnDto> findAll() {
-        List<TurnDto> turnDtos = new ArrayList<>();
+    public Optional<Color> findAny() {
         final var query = "SELECT * FROM turn";
         try (final var connection = getConnection();
              final var preparedStatement = connection.prepareStatement(query)) {
             final var resultSet = preparedStatement.executeQuery();
 
-            while (resultSet.next()) {
-                var turnColor = resultSet.getString("turn");
-                turnDtos.add(new TurnDto(turnColor));
-            }
-
+            boolean existTurn = resultSet.next();
+            return getTurnDto(resultSet, existTurn);
         } catch (final SQLException e) {
             throw new RuntimeException("[METHOD] findAll [TABLE] piece", e);
         }
-
-        return turnDtos;
     }
 
+    private Optional<Color> getTurnDto(final ResultSet resultSet, final boolean existTurn)
+            throws SQLException {
+        if (existTurn) {
+            var turnColor = resultSet.getString("turn");
+            return Optional.of(Color.valueOf(turnColor));
+        }
+        return Optional.empty();
+    }
 
     @Override
     public void deleteAll() {

@@ -14,8 +14,8 @@ import chess.repository.piece.PieceDao;
 import chess.repository.piece.PieceDto;
 import chess.repository.turn.FakeTurnDao;
 import chess.repository.turn.TurnDao;
-import chess.repository.turn.TurnDto;
 import java.util.Map;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -44,7 +44,7 @@ class ChessGameServiceTest {
                 () -> assertThat(pieceDao.findAll()).containsExactlyInAnyOrder(
                         PieceDto.of(BLACK_PAWN.getPiece(), Position.of(1, 1)),
                         PieceDto.of(WHITE_PAWN.getPiece(), Position.of(3, 1))),
-                () -> assertThat(turnDao.findOne()).isEqualTo(TurnDto.of(Color.BLACK)));
+                () -> assertThat(turnDao.findAny()).isEqualTo(Optional.of(Color.BLACK)));
     }
 
     @Test
