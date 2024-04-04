@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PieceDaoImpl implements PieceDao {
+public class JdbcPieceDao implements PieceDao {
 
     @Override
     public void save(final PieceDto pieceDto) {
