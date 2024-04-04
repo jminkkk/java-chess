@@ -9,8 +9,8 @@ public final class DatabaseConfig {
     private static final String SERVER = "localhost:13306";
     private static final String DATABASE = "chess";
     private static final String OPTION = "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "root";
+    private static final String USERNAME = "user";
+    private static final String PASSWORD = "password";
 
     public static Connection getConnection() {
         try {
