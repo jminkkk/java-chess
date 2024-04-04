@@ -27,7 +27,27 @@ public enum GameCommand {
         return helperMassage;
     }
 
-    public boolean isContinuing() {
-        return this == GameCommand.MOVE || this == GameCommand.STATUS;
+    public boolean isOnGoingGameCommand() {
+        return this != GameCommand.START && this != GameCommand.END;
+    }
+
+    public boolean isStartGameCommand() {
+        return this == GameCommand.START;
+    }
+
+    public boolean isNotStartCommand() {
+        return this != GameCommand.START;
+    }
+
+    public boolean isMoveCommand() {
+        return this == GameCommand.MOVE;
+    }
+
+    public boolean isViewStatusCommand() {
+        return this == GameCommand.STATUS;
+    }
+
+    public boolean isEndCommand() {
+        return this == GameCommand.END;
     }
 }

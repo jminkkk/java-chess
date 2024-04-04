@@ -39,7 +39,7 @@ public class ChessGameController {
     }
 
     private void checkStart(final GameCommand gameCommand) {
-        if (gameCommand != GameCommand.START) {
+        if (gameCommand.isNotStartCommand()) {
             throw new IllegalArgumentException("시작 명령어를 입력해주세요.");
         }
     }
@@ -72,25 +72,23 @@ public class ChessGameController {
     }
 
     private boolean isGameActionIfOngoing(final Game game, final GameCommand gameCommand) {
-        return !game.isFinish()
-                && gameCommand != GameCommand.START
-                && gameCommand != GameCommand.END;
+        return !game.isFinish() && gameCommand.isOnGoingGameCommand();
     }
 
     private void executeMoveCommand(final Game game, final GameCommand gameCommand) {
-        if (gameCommand == GameCommand.MOVE) {
+        if (gameCommand.isMoveCommand()) {
             executeTurn(game);
         }
     }
 
     private void executeStatusCommand(final Game game, final GameCommand gameCommand) {
-        if (gameCommand == GameCommand.STATUS) {
+        if (gameCommand.isViewStatusCommand()) {
             viewScore(game.getBoard());
         }
     }
 
     private void checkGameRestart(final GameCommand gameCommand) {
-        if (gameCommand == GameCommand.START) {
+        if (gameCommand.isStartGameCommand()) {
             playNewGame();
         }
     }
@@ -103,7 +101,7 @@ public class ChessGameController {
     }
 
     private void checkGameTerminate(final Game game, final GameCommand gameCommand) {
-        if (gameCommand == GameCommand.END) {
+        if (gameCommand.isEndCommand()) {
             gameService.saveGame(game);
         }
     }
