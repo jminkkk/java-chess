@@ -21,4 +21,9 @@ public class FakePieceDao implements PieceDao {
     public void deleteAll() {
         pieces = new ArrayList<>();
     }
+
+    @Override
+    public boolean existPieces() {
+        return !pieces.isEmpty();
+    }
 }
