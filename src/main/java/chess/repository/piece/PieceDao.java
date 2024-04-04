@@ -8,4 +8,6 @@ public interface PieceDao {
     List<PieceDto> findAll();
 
     void deleteAll();
+
+    boolean existPieces();
 }

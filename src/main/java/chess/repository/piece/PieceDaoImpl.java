@@ -60,4 +60,16 @@ public class PieceDaoImpl implements PieceDao {
             throw new RuntimeException("[METHOD] deleteAll [TABLE] piece", e);
         }
     }
+
+    @Override
+    public boolean existPieces() {
+        final var query = "SELECT EXISTS(SELECT * FROM PIECE)";
+        try (final var connection = getConnection();
+             final var preparedStatement = connection.prepareStatement(query)) {
+            final var resultSet = preparedStatement.executeQuery();
+            return resultSet.getBoolean(1);
+        } catch (SQLException e) {
+            throw new RuntimeException("[METHOD] existPieces [TABLE] piece", e);
+        }
+    }
 }
