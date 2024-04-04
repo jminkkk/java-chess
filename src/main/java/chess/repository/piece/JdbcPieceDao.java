@@ -25,7 +25,7 @@ public class JdbcPieceDao implements PieceDao {
             preparedStatement.setInt(4, position.file().getValue());
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
-            throw new RuntimeException("[METHOD] save [TABLE] piece", e);
+            throw new RuntimeException("[METHOD] save [TABLE] piece" + e.getMessage(), e);
         }
     }
 
@@ -37,7 +37,7 @@ public class JdbcPieceDao implements PieceDao {
             final var resultSet = preparedStatement.executeQuery();
             return mapToPieces(resultSet);
         } catch (final SQLException e) {
-            throw new RuntimeException("[METHOD] findAll [TABLE] piece", e);
+            throw new RuntimeException("[METHOD] findAll [TABLE] piece" + e.getMessage(), e);
         }
     }
 
@@ -64,7 +64,7 @@ public class JdbcPieceDao implements PieceDao {
              final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("[METHOD] deleteAll [TABLE] piece", e);
+            throw new RuntimeException("[METHOD] deleteAll [TABLE] piece" + e.getMessage(), e);
         }
     }
 

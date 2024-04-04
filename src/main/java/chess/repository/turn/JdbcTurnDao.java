@@ -17,7 +17,7 @@ public class JdbcTurnDao implements TurnDao {
             preparedStatement.setString(1, color);
             preparedStatement.executeUpdate();
         } catch (final SQLException e) {
-            throw new RuntimeException("[METHOD] save [TABLE] turn", e);
+            throw new RuntimeException("[METHOD] save [TABLE] turn" + e.getMessage(), e);
         }
     }
 
@@ -31,7 +31,7 @@ public class JdbcTurnDao implements TurnDao {
             boolean existTurn = resultSet.next();
             return getTurnDto(resultSet, existTurn);
         } catch (final SQLException e) {
-            throw new RuntimeException("[METHOD] findAll [TABLE] piece", e);
+            throw new RuntimeException("[METHOD] findAll [TABLE] piece" + e.getMessage(), e);
         }
     }
 
@@ -51,7 +51,7 @@ public class JdbcTurnDao implements TurnDao {
              final var preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("[METHOD] deleteAll [TABLE] turn", e);
+            throw new RuntimeException("[METHOD] deleteAll [TABLE] turn" + e.getMessage(), e);
         }
     }
 }
