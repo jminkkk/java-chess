@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class FakeTurnDao implements TurnDao {
+public class FakeTurnRepository implements TurnRepository {
     private List<String> colors = new ArrayList<>();
 
     @Override

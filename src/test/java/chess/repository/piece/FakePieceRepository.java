@@ -5,7 +5,7 @@ import chess.domain.position.Position;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class FakePieceDao implements PieceDao {
+public class FakePieceRepository implements PieceRepository {
     private Map<Position, Piece> pieces = new LinkedHashMap<>();
 
     @Override

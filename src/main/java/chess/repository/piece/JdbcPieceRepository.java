@@ -12,7 +12,7 @@ import java.sql.SQLException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class JdbcPieceDao implements PieceDao {
+public class JdbcPieceRepository implements PieceRepository {
 
     @Override
     public void save(final Piece piece, final Position position) {

@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 
-public class JdbcTurnDao implements TurnDao {
+public class JdbcTurnRepository implements TurnRepository {
 
     @Override
     public void save(final String color) {

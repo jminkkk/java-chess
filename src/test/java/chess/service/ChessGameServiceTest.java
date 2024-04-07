@@ -11,10 +11,10 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
-import chess.repository.piece.FakePieceDao;
-import chess.repository.piece.PieceDao;
-import chess.repository.turn.FakeTurnDao;
-import chess.repository.turn.TurnDao;
+import chess.repository.piece.FakePieceRepository;
+import chess.repository.piece.PieceRepository;
+import chess.repository.turn.FakeTurnRepository;
+import chess.repository.turn.TurnRepository;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -24,15 +24,15 @@ import org.junit.jupiter.api.Test;
 
 class ChessGameServiceTest {
     private ChessGameService chessGameService;
-    private PieceDao pieceDao;
-    private TurnDao turnDao;
+    private PieceRepository pieceRepository;
+    private TurnRepository turnRepository;
     private Game game;
 
     @BeforeEach
     void init() {
-        pieceDao = new FakePieceDao();
-        turnDao = new FakeTurnDao();
-        chessGameService = new ChessGameService(pieceDao, turnDao);
+        pieceRepository = new FakePieceRepository();
+        turnRepository = new FakeTurnRepository();
+        chessGameService = new ChessGameService(pieceRepository, turnRepository);
 
         game = new Game(new SavedBoardInitializer(
                 Map.of(Position.of(1, 1), BLACK_PAWN.getPiece(), Position.of(3, 1), WHITE_PAWN.getPiece())));
@@ -47,8 +47,8 @@ class ChessGameServiceTest {
         pieces.put(Position.of(3, 1), new Pawn(Color.WHITE));
 
         assertAll(
-                () -> assertThat(pieceDao.findAllPiece()).containsAllEntriesOf(pieces),
-                () -> assertThat(turnDao.findAny()).isEqualTo(Optional.of(Color.BLACK)));
+                () -> assertThat(pieceRepository.findAllPiece()).containsAllEntriesOf(pieces),
+                () -> assertThat(turnRepository.findAny()).isEqualTo(Optional.of(Color.BLACK)));
     }
 
     @Test
